@@ -1,11 +1,9 @@
 import Landing from "@/components/landing"
 import Head from "next/head"
-import Image from "next/image"
-import styles from "../styles/Home.module.css"
 
 export default function Home() {
   return (
-    <div className="flex h-screen w-screen justify-center overflow-hidden">
+    <div className="flex min-h-screen w-screen flex-col items-center overflow-hidden px-3 xs:px-6 sm:px-12">
       <Head>
         <title>SyncList</title>
         <meta name="description" content="" />

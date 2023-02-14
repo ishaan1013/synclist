@@ -8,6 +8,7 @@ body {
   margin: 0;
   overflow-x: hidden;
   height: 100%;
+  background-color: rgb(248 250 252);
 }
 
 a {
@@ -22,4 +23,3 @@ a {
 img {
   user-select: none;
 }
-
