@@ -1,6 +1,7 @@
 import "../styles/globals.css"
 import type { AppProps } from "next/app"
 import localFont from "@next/font/local"
+import { SessionProvider } from "next-auth/react"
 
 const c = localFont({
   src: [
@@ -57,10 +58,15 @@ const c = localFont({
   ],
 })
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({
+  Component,
+  pageProps: { session, ...pageProps },
+}: AppProps) {
   return (
-    <div className={c.className}>
-      <Component {...pageProps} />
-    </div>
+    <SessionProvider session={session}>
+      <div className={c.className}>
+        <Component {...pageProps} />
+      </div>
+    </SessionProvider>
   )
 }

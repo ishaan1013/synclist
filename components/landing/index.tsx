@@ -1,5 +1,6 @@
 import { Button } from "../ui/button"
 import { ArrowRight, Github } from "lucide-react"
+import { signIn } from "next-auth/react"
 
 const Landing = () => {
   return (
@@ -8,7 +9,7 @@ const Landing = () => {
         Real-Time Spotify Playlist Collaboration
       </div>
       <div className="mt-8 flex space-x-4">
-        <Button variant={"default"}>
+        <Button variant={"default"} onClick={() => signIn("spotify")}>
           Log In With Spotify <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
         <Button variant={"outline"}>
