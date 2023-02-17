@@ -1,4 +1,4 @@
-import NextAuth, { Session } from "next-auth";
+import NextAuth, { Session, TokenSet, User } from "next-auth";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import SpotifyProvider from "next-auth/providers/spotify";
 import { prisma } from "@/lib/prisma";
@@ -19,7 +19,54 @@ export const authOptions = {
       clientId: process.env.SPOTIFY_CLIENT_ID as string,
       clientSecret: process.env.SPOTIFY_CLIENT_SECRET as string
     })
-  ]
+  ],
+
+  callbacks: {
+  async session({ session, user }: { session: Session, user: User }) {
+      const [spotify] = await prisma.account.findMany({
+        where: { userId: user.id },
+      })
+      if (spotify.expires_at && spotify.expires_at < Date.now()) {
+        console.log(spotify.expires_at, " is less than ", Date.now())
+        // If the access token has expired, try to refresh it
+        try {
+          const response = await fetch("https://accounts.spotify.com/api/token", {
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams({
+              client_id: process.env.SPOTIFY_CLIENT_ID as string,
+              client_secret: process.env.SPOTIFY_CLIENT_SECRET as string,
+              grant_type: "refresh_token",
+              refresh_token: spotify.refresh_token ?? "",
+            }),
+            method: "POST",
+          })
+
+          const tokens: TokenSet = await response.json()
+
+          if (!response.ok) throw tokens
+
+          console.log("Refreshed access token", tokens)
+
+          await prisma.account.update({
+            data: {
+              access_token: tokens.access_token,
+              expires_at: (Date.now() + 3600000),
+              refresh_token: tokens.refresh_token ?? spotify.refresh_token,
+            },
+            where: {
+              provider_providerAccountId: {
+                provider: "spotify",
+                providerAccountId: spotify.providerAccountId,
+              },
+            },
+          })
+        } catch (error) {
+          console.error("Error refreshing access token", error)
+        }
+      }
+      return session
+    },
+  },
 };
 
 export default NextAuth(authOptions);

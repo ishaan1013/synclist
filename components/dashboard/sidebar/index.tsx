@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { LucideLogOut } from "lucide-react"
+import { signOut } from "next-auth/react"
 import Image from "next/image"
 
 const Sidebar = ({
@@ -26,7 +27,9 @@ const Sidebar = ({
           </div>
         </div>
       </button>
-      <Button className="group relative m-0 flex h-16 w-full items-center justify-start space-x-3 rounded-xl bg-transparent p-2 text-left hover:bg-slate-800">
+      <Button
+        onClick={() => signOut()}
+        className="group relative m-0 flex h-16 w-full items-center justify-start space-x-3 rounded-xl bg-transparent p-2 text-left hover:bg-slate-800">
         {/* <div className="group-hover:opcity-100 absolute left-5 z-10 -translate-y-2 opacity-0 duration-200 group-hover:translate-y-0">
           <LucideLogOut className="h-7 w-7 text-white" />
         </div> */}

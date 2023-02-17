@@ -1,13 +1,16 @@
 import Head from "next/head"
-import { GetServerSideProps } from "next"
+import { GetServerSideProps, InferGetServerSidePropsType } from "next"
 import { getServerSession } from "next-auth"
 import { useSession } from "next-auth/react"
 import { authOptions } from "./api/auth/[...nextauth]"
+import { prisma } from "@/lib/prisma"
 
 import Sidebar from "@/components/dashboard/sidebar"
 import PlaylistSelect from "@/components/dashboard/playlistSelect"
 
-const Dashboard = () => {
+const Dashboard = ({
+  user,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const { data: session } = useSession()
   const data = session?.user
 
@@ -20,7 +23,7 @@ const Dashboard = () => {
       </Head>
       <div className="flex h-full">
         <Sidebar data={data} />
-        <PlaylistSelect />
+        <PlaylistSelect accessToken={user.accounts?.[0].access_token} />
       </div>
     </div>
   )
@@ -38,9 +41,21 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
   }
 
+  const user = await prisma.user.findUnique({
+    where: {
+      email: session.user?.email ?? "",
+    },
+    include: {
+      accounts: true,
+    },
+  })
+
+  console.log(user)
+
   return {
     props: {
       session,
+      user,
     },
   }
 }
