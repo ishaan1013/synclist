@@ -7,12 +7,22 @@ import { prisma } from "@/lib/prisma"
 
 import Sidebar from "@/components/dashboard/sidebar"
 import PlaylistSelect from "@/components/dashboard/playlistSelect"
+import { useEffect } from "react"
+import { useAccountStore } from "@/lib/state"
 
 const Dashboard = ({
   user,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const { data: session } = useSession()
   const data = session?.user
+
+  const setUserData = useAccountStore((state) => state.setUserData)
+  const setAccessToken = useAccountStore((state) => state.setAccessToken)
+
+  useEffect(() => {
+    setUserData(data)
+    setAccessToken(user.accounts?.[0].access_token)
+  }, [])
 
   return (
     <div className="h-screen w-screen overflow-hidden">
@@ -22,8 +32,9 @@ const Dashboard = ({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="flex h-full">
-        <Sidebar data={data} />
-        <PlaylistSelect accessToken={user.accounts?.[0].access_token} />
+        {/* <div>{JSON.stringify(data)}</div> */}
+        <Sidebar />
+        <PlaylistSelect />
       </div>
     </div>
   )
