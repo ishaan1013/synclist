@@ -23,3 +23,22 @@ a {
 img {
   user-select: none;
 }
+
+.link-scroll::-webkit-scrollbar {
+  height: 7px;
+  z-index: 100;
+}
+
+.link-scroll::-webkit-scrollbar-track {
+  background: #e2e8f0;
+}
+
+.link-scroll::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background: #cbd5e1;
+  rounded: 50px;
+}
+
+.link-scroll::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}

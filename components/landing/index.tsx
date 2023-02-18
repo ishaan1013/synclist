@@ -9,10 +9,10 @@ const Landing = () => {
         Real-Time Spotify Playlist Collaboration
       </div>
       <div className="mt-8 flex space-x-4">
-        <Button variant={"default"} onClick={() => signIn("spotify")}>
+        <Button size="lg" variant={"default"} onClick={() => signIn("spotify")}>
           Log In With Spotify <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
-        <Button variant={"outline"}>
+        <Button size="lg" variant={"outline"}>
           <Github className="mr-2 h-4 w-4" />
           GitHub
         </Button>

@@ -6,9 +6,9 @@ import { authOptions } from "./api/auth/[...nextauth]"
 import { prisma } from "@/lib/prisma"
 
 import Sidebar from "@/components/dashboard/sidebar"
-import PlaylistSelect from "@/components/dashboard/playlistSelect"
+import { Editor, PlaylistSelect } from "@/components/dashboard/screens"
 import { useEffect } from "react"
-import { useAccountStore } from "@/lib/state"
+import { useAccountStore, usePlaylistStore } from "@/lib/state"
 
 const Dashboard = ({
   user,
@@ -18,6 +18,7 @@ const Dashboard = ({
 
   const setUserData = useAccountStore((state) => state.setUserData)
   const setAccessToken = useAccountStore((state) => state.setAccessToken)
+  const selected = usePlaylistStore((state) => state.selected)
 
   useEffect(() => {
     setUserData(data)
@@ -32,9 +33,11 @@ const Dashboard = ({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="flex h-full">
-        {/* <div>{JSON.stringify(data)}</div> */}
         <Sidebar />
-        <PlaylistSelect />
+        {/* <div className="w-96 text-xs text-slate-500">
+          {JSON.stringify(data)}
+        </div> */}
+        {selected ? <Editor /> : <PlaylistSelect />}
       </div>
     </div>
   )
