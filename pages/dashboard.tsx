@@ -34,7 +34,7 @@ const Dashboard = ({
       </Head>
       <div className="flex h-full">
         <Sidebar />
-        {/* <div className="w-96 text-xs text-slate-500">
+        {/* <div className="w-96 text-xs text-zinc-500">
           {JSON.stringify(data)}
         </div> */}
         {selected ? <Editor /> : <PlaylistSelect />}

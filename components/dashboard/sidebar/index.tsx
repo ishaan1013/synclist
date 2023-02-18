@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { useAccountStore, usePlaylistStore } from "@/lib/state"
-import { LucideLogOut } from "lucide-react"
+import { Copy, LucideLogOut } from "lucide-react"
 import { signOut } from "next-auth/react"
 import Image from "next/image"
 import { useEffect, useState } from "react"
@@ -25,36 +25,58 @@ const Sidebar = () => {
   }, [selected])
 
   return (
-    <div className="flex w-60 flex-col items-center justify-between bg-slate-900 py-10 px-1 xs:px-3">
-      <Button
-        onClick={() => setSelected("")}
-        className="group relative m-0 flex h-16 w-full items-center justify-start space-x-3 rounded-lg bg-transparent p-2 text-left hover:bg-slate-800">
-        <div className="relative z-0 aspect-square h-12 overflow-hidden rounded-md bg-slate-600 bg-cover duration-200">
-          {image ? (
-            <Image
-              className="min-h-full min-w-full object-cover"
-              src={image}
-              alt=""
-              fill
-            />
-          ) : null}
-        </div>
-        <div className="-space-y-1">
-          <div className="w-[8.5rem] overflow-hidden text-ellipsis whitespace-nowrap text-left font-medium text-white">
-            {selected ? name : "No Playlist Selected"}
+    <div className="flex w-60 min-w-[15rem] flex-col items-center justify-between bg-zinc-900 py-10 px-3">
+      <div className="flex w-full flex-col">
+        <Button
+          onClick={() => setSelected("")}
+          className="group relative m-0 flex h-16 w-full items-center justify-start space-x-3 rounded-lg bg-transparent p-2 text-left hover:bg-zinc-800">
+          <div className="relative z-0 aspect-square h-12 overflow-hidden rounded-md bg-zinc-600 bg-cover duration-200">
+            {image ? (
+              <Image
+                className="min-h-full min-w-full object-cover"
+                src={image}
+                alt=""
+                fill
+              />
+            ) : null}
           </div>
-          <div className="w-[8.5rem] overflow-hidden text-ellipsis whitespace-nowrap text-left text-sm font-normal text-slate-500">
-            {selected ? "Change Playlist" : "(Select or create)"}
+          <div className="-space-y-1">
+            <div className="w-[8.5rem] overflow-hidden text-ellipsis whitespace-nowrap text-left font-medium text-white">
+              {selected ? name : "No Playlist Selected"}
+            </div>
+            <div className="w-[8.5rem] overflow-hidden text-ellipsis whitespace-nowrap text-left text-sm font-normal text-zinc-500">
+              {selected ? "Change Playlist" : "(Select or create)"}
+            </div>
           </div>
-        </div>
-      </Button>
+        </Button>
+
+        {selected ? (
+          <>
+            <div className="mt-2 h-0.5 w-full bg-zinc-800" />
+            <div className="mt-4 flex w-full justify-between space-x-2">
+              <Button className="h-auto bg-zinc-800 py-1.5 px-3 text-sm hover:bg-zinc-700">
+                <Copy className="mr-1.5 h-3 w-3" />
+                Room ID
+              </Button>
+              <Button className="h-auto bg-zinc-800 py-1.5 px-3 text-sm hover:bg-zinc-700">
+                <Copy className="mr-1.5 h-3 w-3" />
+                Invite URL
+              </Button>
+            </div>
+            <div className="mt-3 flex items-center space-x-2 pl-3">
+              <div className="h-2 w-2 animate-pulse rounded-full bg-green-600" />
+              <div className="text-sm text-white">1 Collaborator Active</div>
+            </div>
+          </>
+        ) : null}
+      </div>
       <Button
         onClick={() => signOut()}
-        className="group relative m-0 flex h-16 w-full items-center justify-start space-x-3 rounded-lg bg-transparent p-2 text-left hover:bg-slate-800">
+        className="group relative m-0 flex h-16 w-full items-center justify-start space-x-3 rounded-lg bg-transparent p-2 text-left hover:bg-zinc-800">
         {/* <div className="group-hover:opcity-100 absolute left-5 z-10 -translate-y-2 opacity-0 duration-200 group-hover:translate-y-0">
           <LucideLogOut className="h-7 w-7 text-white" />
         </div> */}
-        <div className="relative z-0 aspect-square h-12 overflow-hidden rounded-md bg-slate-600 bg-cover duration-200">
+        <div className="relative z-0 aspect-square h-12 overflow-hidden rounded-md bg-zinc-600 bg-cover duration-200">
           <Image
             className="min-h-full min-w-full object-cover"
             src={data?.image ?? ""}
@@ -66,7 +88,7 @@ const Sidebar = () => {
           <div className="w-[8.5rem] overflow-hidden text-ellipsis whitespace-nowrap text-left font-medium text-white">
             {data?.name}
           </div>
-          <div className="w-[8.5rem] overflow-hidden text-ellipsis whitespace-nowrap text-left text-sm font-normal text-slate-500">
+          <div className="w-[8.5rem] overflow-hidden text-ellipsis whitespace-nowrap text-left text-sm font-normal text-zinc-500">
             {data?.email}
           </div>
         </div>

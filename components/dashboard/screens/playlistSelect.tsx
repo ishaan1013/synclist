@@ -33,7 +33,7 @@ export const PlaylistSelect = () => {
           Create New
         </Button>
       </div>
-      <div className="my-4 w-[900px] text-xs">{accessToken}</div>
+      {/* <div className="my-4 w-[900px] text-xs">{accessToken}</div> */}
       <div className=" mt-8 flex w-full max-w-screen-lg flex-wrap gap-4">
         {playlists.playlists ? (
           playlists.playlists?.items?.map((playlist: any, i: number) => (
@@ -53,20 +53,20 @@ export const PlaylistSelect = () => {
               <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-left">
                 {playlist.name}
               </div>
-              <div className="ellipsis mt-1 h-5 w-full overflow-hidden whitespace-nowrap text-left text-sm font-normal text-slate-500">
+              <div className="ellipsis mt-1 h-5 w-full overflow-hidden whitespace-nowrap text-left text-sm font-normal text-zinc-500">
                 {playlist.description ?? ""}
               </div>
             </Button>
           ))
         ) : (
-          <div className="text-slate-500">
+          <div className="text-zinc-500">
             No Playlists Found. Create one to get started!
           </div>
         )}
       </div>
-      <div className="h-96 w-[900px] overflow-auto whitespace-pre text-xs">
+      {/* <div className="h-96 w-[900px] overflow-auto whitespace-pre text-xs">
         {JSON.stringify(playlists, null, "\t")}
-      </div>
+      </div> */}
     </div>
   )
 }
