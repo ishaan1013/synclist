@@ -89,8 +89,10 @@ export const Editor = () => {
       {/* <div className="my-4 w-[900px] text-xs">{accessToken}</div> */}
       <div className="mt-8 flex w-full max-w-[28rem] flex-col space-y-2">
         {songs ? (
-          songs.songs?.items?.map((song: any) => (
-            <div className="flex items-center  justify-between rounded-md bg-zinc-100 p-3 text-zinc-900 hover:bg-zinc-200">
+          songs.songs?.items?.map((song: any, i: number) => (
+            <div
+              key={i}
+              className="flex items-center  justify-between rounded-md bg-zinc-100 p-3 text-zinc-900 hover:bg-zinc-200">
               <div className="flex items-center">
                 <button className="rounded-md p-0.5 focus:outline-none focus:ring-2 focus:ring-zinc-400 focus:ring-offset-2">
                   <GripVertical className="h-4 w-4" />
