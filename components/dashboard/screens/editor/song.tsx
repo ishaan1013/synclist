@@ -96,4 +96,5 @@ export const SongOptionsDropdown = () => {
   )
 }
 
+Song.displayName = "Song"
 export default Song
