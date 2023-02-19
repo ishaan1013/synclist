@@ -8,7 +8,7 @@ import { authOptions } from "./api/auth/[...nextauth]"
 const Home = () => {
   //   { providers }: InferGetServerSidePropsType<typeof getServerSideProps>
   return (
-    <div className="flex min-h-screen w-screen flex-col items-center overflow-hidden px-3 xs:px-6 sm:px-12">
+    <div className="flex h-screen w-screen flex-col items-center overflow-hidden px-3 xs:px-6 sm:px-12">
       <Head>
         <title>SyncList</title>
         <meta name="description" content="" />

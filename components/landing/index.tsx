@@ -12,9 +12,8 @@ const Landing = () => {
         <Button size="lg" variant={"default"} onClick={() => signIn("spotify")}>
           Log In With Spotify <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
-        <Button size="lg" variant={"outline"}>
-          <Github className="mr-2 h-4 w-4" />
-          GitHub
+        <Button size="lg" className="px-4" variant={"outline"}>
+          <Github className="h-4 w-4" />
         </Button>
       </div>
       <div className="mt-12 aspect-square w-full max-w-screen-lg rounded-2xl bg-zinc-900 xs:aspect-video"></div>
