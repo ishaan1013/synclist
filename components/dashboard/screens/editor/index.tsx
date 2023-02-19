@@ -10,6 +10,7 @@ import {
 import { Users } from "lucide-react"
 import List from "./list"
 import Image from "next/image"
+import Avatar from "./avatar"
 
 export const Editor = () => {
   const accessToken = useAccountStore((state) => state.accessToken)
@@ -46,14 +47,7 @@ export const Editor = () => {
         </div>
         <div className="flex items-center space-x-4">
           <div>
-            <div className="relative h-10 w-10 overflow-hidden rounded-full bg-zinc-600 outline-none ring-2 ring-blue-500 ring-offset-2">
-              <Image
-                className="min-h-full min-w-full object-cover"
-                src={data?.image ?? ""}
-                alt=""
-                fill
-              />
-            </div>
+            <Avatar name="Ishaan" src={data?.image} clr="zinc" />
           </div>
           <UserPopover />
         </div>
