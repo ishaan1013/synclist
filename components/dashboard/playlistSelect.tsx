@@ -1,14 +1,15 @@
 import { Button } from "@/components/ui/button"
-import { useAccountStore, usePlaylistStore } from "@/lib/state"
+import { useAccountStore, useStore } from "@/lib/state"
 import { FolderPlus } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
 import { useEffect, useState } from "react"
 
 export const PlaylistSelect = () => {
   const accessToken = useAccountStore((state) => state.accessToken)
-  const playlists = usePlaylistStore((state) => state.playlists)
-  const setPlaylists = usePlaylistStore((state) => state.setPlaylists)
-  const setSelected = usePlaylistStore((state) => state.setSelected)
+  const playlists = useStore((state) => state.playlists)
+  const setPlaylists = useStore((state) => state.setPlaylists)
+  const setSelected = useStore((state) => state.setSelected)
 
   useEffect(() => {
     const getPlaylists = async () => {
@@ -37,26 +38,27 @@ export const PlaylistSelect = () => {
       <div className=" mt-8 flex w-full max-w-screen-lg flex-wrap gap-4">
         {playlists.playlists ? (
           playlists.playlists?.items?.map((playlist: any, i: number) => (
-            <Button
-              key={i}
-              className="h-auto w-52 flex-col items-start justify-start rounded-lg p-3 text-base"
-              variant="subtle"
-              onClick={() => setSelected(playlist.id)}>
-              <div className="relative mb-4 aspect-square w-full overflow-hidden rounded-md">
-                <Image
-                  src={playlist.images[0].url}
-                  alt="playlist image"
-                  fill
-                  className="min-h-full min-w-full object-cover"
-                />
-              </div>
-              <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-left">
-                {playlist.name}
-              </div>
-              <div className="ellipsis mt-1 h-5 w-full overflow-hidden whitespace-nowrap text-left text-sm font-normal text-zinc-500">
-                {playlist.description ?? ""}
-              </div>
-            </Button>
+            <Link href="/editor" key={i}>
+              <Button
+                className="h-auto w-52 flex-col items-start justify-start rounded-lg p-3 text-base"
+                variant="subtle"
+                onClick={() => setSelected(playlist.id)}>
+                <div className="relative mb-4 aspect-square w-full overflow-hidden rounded-md">
+                  <Image
+                    src={playlist.images[0].url}
+                    alt="playlist image"
+                    fill
+                    className="min-h-full min-w-full object-cover"
+                  />
+                </div>
+                <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-left">
+                  {playlist.name}
+                </div>
+                <div className="ellipsis mt-1 h-5 w-full overflow-hidden whitespace-nowrap text-left text-sm font-normal text-zinc-500">
+                  {playlist.description ?? ""}
+                </div>
+              </Button>
+            </Link>
           ))
         ) : (
           <div className="text-zinc-500">

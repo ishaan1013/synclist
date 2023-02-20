@@ -5,10 +5,10 @@ import { useSession } from "next-auth/react"
 import { authOptions } from "./api/auth/[...nextauth]"
 import { prisma } from "@/lib/prisma"
 
-import Sidebar from "@/components/dashboard/sidebar"
-import { Editor, PlaylistSelect } from "@/components/dashboard/screens"
+import Sidebar from "@/components/sidebar"
+import { PlaylistSelect } from "@/components/dashboard"
 import { useEffect } from "react"
-import { useAccountStore, usePlaylistStore } from "@/lib/state"
+import { useAccountStore } from "@/lib/state"
 
 const Dashboard = ({
   user,
@@ -18,7 +18,6 @@ const Dashboard = ({
 
   const setUserData = useAccountStore((state) => state.setUserData)
   const setAccessToken = useAccountStore((state) => state.setAccessToken)
-  const selected = usePlaylistStore((state) => state.selected)
 
   useEffect(() => {
     setUserData(data)
@@ -37,7 +36,7 @@ const Dashboard = ({
         {/* <div className="w-96 text-xs text-zinc-500">
           {JSON.stringify(data)}
         </div> */}
-        {selected ? <Editor /> : <PlaylistSelect />}
+        <PlaylistSelect />
       </div>
     </div>
   )

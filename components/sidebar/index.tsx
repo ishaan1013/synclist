@@ -1,15 +1,16 @@
 import { Button } from "@/components/ui/button"
-import { useAccountStore, usePlaylistStore } from "@/lib/state"
+import { useAccountStore, useStore } from "@/lib/state"
 import { Check, Copy, LucideLogOut } from "lucide-react"
 import { signOut } from "next-auth/react"
 import Image from "next/image"
+import Link from "next/link"
 import { useEffect, useState } from "react"
 
 const Sidebar = () => {
   const data = useAccountStore((state) => state.userData)
-  const selected = usePlaylistStore((state) => state.selected)
-  const setSelected = usePlaylistStore((state) => state.setSelected)
-  const playlists = usePlaylistStore((state) => state.playlists)
+  const selected = useStore((state) => state.selected)
+  const setSelected = useStore((state) => state.setSelected)
+  const playlists = useStore((state) => state.playlists)
 
   const [name, setName] = useState("")
   const [image, setImage] = useState("")
@@ -46,28 +47,30 @@ const Sidebar = () => {
   return (
     <div className="flex w-60 min-w-[15rem] flex-col items-center justify-between bg-zinc-900 py-10 px-3">
       <div className="flex w-full flex-col">
-        <Button
-          onClick={() => setSelected("")}
-          className="group relative m-0 flex h-16 w-full items-center justify-start space-x-3 rounded-lg bg-transparent p-2 text-left hover:bg-zinc-800">
-          <div className="relative z-0 aspect-square h-12 overflow-hidden rounded-md bg-zinc-600 bg-cover duration-200">
-            {image ? (
-              <Image
-                className="min-h-full min-w-full object-cover"
-                src={image}
-                alt=""
-                fill
-              />
-            ) : null}
-          </div>
-          <div className="-space-y-1">
-            <div className="w-[8.5rem] overflow-hidden text-ellipsis whitespace-nowrap text-left font-medium text-white">
-              {selected ? name : "No Playlist Selected"}
+        <Link href="/dashboard">
+          <Button
+            onClick={() => setSelected("")}
+            className="group relative m-0 flex h-16 w-full items-center justify-start space-x-3 rounded-lg bg-transparent p-2 text-left hover:bg-zinc-800">
+            <div className="relative z-0 aspect-square h-12 overflow-hidden rounded-md bg-zinc-600 bg-cover duration-200">
+              {image ? (
+                <Image
+                  className="min-h-full min-w-full object-cover"
+                  src={image}
+                  alt=""
+                  fill
+                />
+              ) : null}
             </div>
-            <div className="w-[8.5rem] overflow-hidden text-ellipsis whitespace-nowrap text-left text-sm font-normal text-zinc-500">
-              {selected ? "Change Playlist" : "(Select or create)"}
+            <div className="-space-y-1">
+              <div className="w-[8.5rem] overflow-hidden text-ellipsis whitespace-nowrap text-left font-medium text-white">
+                {selected ? name : "No Playlist Selected"}
+              </div>
+              <div className="w-[8.5rem] overflow-hidden text-ellipsis whitespace-nowrap text-left text-sm font-normal text-zinc-500">
+                {selected ? "Change Playlist" : "(Select or create)"}
+              </div>
             </div>
-          </div>
-        </Button>
+          </Button>
+        </Link>
 
         {selected ? (
           <>
