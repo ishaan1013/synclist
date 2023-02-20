@@ -5,6 +5,7 @@ import Editor from "@/components/editor"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { useStore } from "@/lib/state"
 import Cursor from "@/components/editor/cursor"
+import AddSongDialog from "@/components/editor/addSongDialog"
 
 const COLORS = [
   "#3b82f6",
@@ -33,6 +34,7 @@ const EditorScreen = () => {
   }, [enterRoom, leaveRoom])
 
   const [editorScroll, setEditorScroll] = useState(0)
+  const [songDialogOpen, setSongDialogOpen] = useState(false)
 
   return (
     <div
@@ -45,6 +47,7 @@ const EditorScreen = () => {
         <meta name="description" content="" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
       {others.map(({ connectionId, presence }) => {
         if (presence.cursor === null || !presence.cursor) {
           return null
@@ -64,10 +67,12 @@ const EditorScreen = () => {
         )
       })}
 
+      <AddSongDialog open={songDialogOpen} setOpen={setSongDialogOpen} />
+
       <div className="dashboard-scroll flex h-full overflow-x-auto">
         <Sidebar />
         {/* <div className="w-52">{JSON.stringify(editorScroll)}</div> */}
-        <Editor setEditorScroll={setEditorScroll} />
+        <Editor setEditorScroll={setEditorScroll} setOpen={setSongDialogOpen} />
       </div>
     </div>
   )

@@ -1,15 +1,17 @@
 import { Button } from "@/components/ui/button"
 import { useAccountStore, useStore } from "@/lib/state"
-import { Music } from "lucide-react"
-import { useCallback, useEffect, useRef, useState } from "react"
+import { Command, Music } from "lucide-react"
+import { Dispatch, useCallback, useEffect, useRef, useState } from "react"
 import List from "./list"
 import Avatar from "./avatar"
 import LinkPopover from "./linkPopover"
 
 const Editor = ({
   setEditorScroll,
+  setOpen,
 }: {
   setEditorScroll: (editorScroll: number) => void
+  setOpen: Dispatch<React.SetStateAction<boolean>>
 }) => {
   const accessToken = useAccountStore((state) => state.accessToken)
   const selected = useStore((state) => state.selected)
@@ -53,9 +55,12 @@ const Editor = ({
       <div className="flex w-full items-center justify-between">
         <div className="flex items-center space-x-6">
           <div className="text-3xl font-medium">Playlist Editor</div>
-          <Button className="text-base">
-            <Music className="mr-2 h-4 w-4" />
+          <Button onClick={() => setOpen(true)} className="text-base">
             Add Song
+            <div className="ml-2.5 flex items-center text-zinc-500">
+              <Command className="h-3.5 w-3.5" />
+              <span className="translate-y-[1px] text-sm">K</span>
+            </div>
           </Button>
         </div>
         <div className="flex items-center space-x-4">
