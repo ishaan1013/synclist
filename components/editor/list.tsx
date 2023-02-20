@@ -35,13 +35,17 @@ const List = ({ songs }: { songs: any }) => {
     if (active?.id !== over?.id) {
       setItems((items: any) => {
         const oldIndex = items.indexOf(
-          items?.find((item: any) => item.track.id === active.id)
+          items?.find((item: any) => item?.track?.id === active?.id)
         )
         const newIndex = items.indexOf(
-          items?.find((item: any) => item.track.id === over.id)
+          items?.find((item: any) => item?.track?.id === over?.id)
         )
 
-        return arrayMove(items, oldIndex, newIndex)
+        if (newIndex !== -1) {
+          return arrayMove(items, oldIndex, newIndex)
+        } else {
+          return items
+        }
       })
     }
 
@@ -49,7 +53,7 @@ const List = ({ songs }: { songs: any }) => {
   }
 
   useEffect(() => {
-    const a = items?.find((item: any) => item.track.id === activeId)
+    const a = items?.find((item: any) => item?.track?.id === activeId)
     setActive(a)
   }, [activeId])
 

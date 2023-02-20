@@ -7,14 +7,13 @@ import { useStore } from "@/lib/state"
 import Cursor from "@/components/editor/cursor"
 
 const COLORS = [
-  "#E57373",
-  "#9575CD",
-  "#4FC3F7",
-  "#81C784",
-  "#FFF176",
-  "#FF8A65",
-  "#F06292",
-  "#7986CB",
+  "#3b82f6",
+  "#22c55e",
+  "#ef4444",
+  "#eab308",
+  "#f97316",
+  "#a855f7",
+  "#ec4899",
 ]
 
 const EditorScreen = () => {
@@ -60,7 +59,7 @@ const EditorScreen = () => {
             // @ts-ignore
             x={presence?.cursor?.x}
             // @ts-ignore
-            y={presence?.cursor?.y}
+            y={presence?.cursor?.y - editorScroll}
           />
         )
       })}

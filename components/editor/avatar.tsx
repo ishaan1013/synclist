@@ -24,6 +24,7 @@ const Avatar = ({
     yellow: "ring-yellow-500",
     orange: "ring-orange-500",
     purple: "ring-purple-500",
+    pink: "ring-pink-500",
   }
   const avatarCn = cn(
     "relative h-10 w-10 overflow-hidden rounded-full bg-zinc-600 outline-none ring-2 ring-offset-2",
