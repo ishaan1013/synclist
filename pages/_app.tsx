@@ -3,7 +3,8 @@ import type { AppProps } from "next/app"
 import localFont from "@next/font/local"
 import { SessionProvider } from "next-auth/react"
 
-const c = localFont({
+export const circular = localFont({
+  variable: "--circular-font",
   src: [
     {
       path: "../styles/CircularBook.woff",
@@ -64,7 +65,7 @@ export default function App({
 }: AppProps) {
   return (
     <SessionProvider session={session}>
-      <div className={c.className}>
+      <div className={circular.className}>
         <Component {...pageProps} />
       </div>
     </SessionProvider>

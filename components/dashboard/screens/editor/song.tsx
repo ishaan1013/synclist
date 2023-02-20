@@ -9,6 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { GripVertical, Mic2, MoreVertical, Music, Trash2 } from "lucide-react"
+import { circular } from "@/pages/_app"
 
 const Song = forwardRef(
   (
@@ -76,19 +77,27 @@ export const SongOptionsDropdown = () => {
           <MoreVertical className="h-4 w-4" />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-44">
+      <DropdownMenuContent>
         <DropdownMenuGroup>
           <DropdownMenuItem>
             <Music className="mr-2 h-4 w-4" />
-            <span>See Song</span>
+            <span className={circular.variable}>
+              <span className="circular font-normal">See Song</span>
+            </span>
           </DropdownMenuItem>
           <DropdownMenuItem>
             <Mic2 className="mr-2 h-4 w-4" />
-            <span>See Artist</span>
+            <span className={circular.variable}>
+              <span className="circular font-normal">See Artist</span>
+            </span>
           </DropdownMenuItem>
           <DropdownMenuItem className="font-medium text-red-500">
             <Trash2 className="mr-2 h-4 w-4" />
-            <span>Delete From Playlist</span>
+            <span className={circular.variable}>
+              <span className="circular pr-1 font-normal">
+                Remove From Playlist
+              </span>
+            </span>
           </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>

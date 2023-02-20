@@ -35,11 +35,32 @@ img {
 }
 
 .link-scroll::-webkit-scrollbar-thumb {
-  border-radius: 3px;
-  background: #d4d4d8;
-  rounded: 50px;
+  border-radius: 50px;
+  background: #c3c3c7;
 }
 
 .link-scroll::-webkit-scrollbar-thumb:hover {
   background: #a1a1aa;
+}
+
+.dashboard-scroll::-webkit-scrollbar {
+  height: 13px;
+  width: 13px;
+  z-index: 100;
+}
+
+.dashboard-scroll::-webkit-scrollbar-track {
+  background: #e4e4e7;
+}
+
+.dashboard-scroll::-webkit-scrollbar-thumb {
+  background: #c3c3c7;
+}
+
+.dashboard-scroll::-webkit-scrollbar-thumb:hover {
+  background: #a1a1aa;
+}
+
+.circular {
+  font-family: var(--circular-font);
 }

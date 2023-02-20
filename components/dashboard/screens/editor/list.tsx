@@ -81,7 +81,7 @@ const List = ({ songs }: { songs: any }) => {
               strategy={verticalListSortingStrategy}>
               {items ? (
                 items.map((song: any, i: number) => (
-                  <SortableSong key={i} id={song.track.id} song={song} />
+                  <SortableSong key={i} id={song.track?.id} song={song} />
                 ))
               ) : (
                 <div>loading</div>

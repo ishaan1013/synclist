@@ -32,7 +32,7 @@ const Avatar = ({
   return (
     <TooltipProvider delayDuration={200}>
       <Tooltip>
-        <TooltipTrigger>
+        <TooltipTrigger className="rounded-full">
           <div className={avatarCn}>
             <Image
               className="min-h-full min-w-full object-cover"

@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { useAccountStore, usePlaylistStore } from "@/lib/state"
-import { Copy, Music } from "lucide-react"
+import { Check, Copy, Music } from "lucide-react"
 import { useEffect, useState } from "react"
 import {
   Popover,
@@ -11,6 +11,8 @@ import { Users } from "lucide-react"
 import List from "./list"
 import Image from "next/image"
 import Avatar from "./avatar"
+import { circular } from "@/pages/_app"
+import { cn } from "@/lib/utils"
 
 export const Editor = () => {
   const accessToken = useAccountStore((state) => state.accessToken)
@@ -36,7 +38,7 @@ export const Editor = () => {
   }, [selected, accessToken])
 
   return (
-    <div className="flex h-full flex-grow flex-col items-start justify-start overflow-y-auto p-12">
+    <div className="dashboard-scroll flex h-full min-w-[650px] flex-grow flex-col items-start justify-start overflow-y-auto p-12">
       <div className="flex w-full items-center justify-between">
         <div className="flex items-center space-x-6">
           <div className="text-3xl font-medium">Playlist Editor</div>
@@ -46,7 +48,7 @@ export const Editor = () => {
           </Button>
         </div>
         <div className="flex items-center space-x-4">
-          <div>
+          <div className="translate-y-1">
             <Avatar name="Ishaan" src={data?.image} clr="zinc" />
           </div>
           <UserPopover />
@@ -62,6 +64,16 @@ export const Editor = () => {
 }
 
 export function UserPopover() {
+  const [copied, setCopied] = useState(false)
+
+  useEffect(() => {
+    if (copied) {
+      setTimeout(() => {
+        setCopied(false)
+      }, 1000)
+    }
+  }, [copied])
+
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -70,14 +82,22 @@ export function UserPopover() {
           <span className="sr-only">Open popover</span>
         </Button>
       </PopoverTrigger>
-      <PopoverContent align="end" className="w-80 p-2">
+      <PopoverContent
+        align="end"
+        className={cn("w-80 p-2", circular.className)}>
         <div className="relative h-10 w-full overflow-hidden rounded-md border border-zinc-300 font-normal">
           <div className="absolute right-0 top-0 z-10 h-full w-32"></div>
-          <Button className="absolute right-[3px] top-1/2 z-20 h-auto -translate-y-1/2 py-1.5 px-2 text-xs shadow-[0_0px_30px_30px] shadow-white">
-            <Copy className="mr-1 h-3 w-3" />
+          <Button
+            onClick={() => setCopied(true)}
+            className="circular absolute right-[3px] top-1/2 z-20 h-auto -translate-y-1/2 py-1.5 px-2 text-xs shadow-[0_0px_30px_30px] shadow-white">
+            {copied ? (
+              <Check className="mr-1 h-3 w-3" />
+            ) : (
+              <Copy className="mr-1 h-3 w-3" />
+            )}
             Copy
           </Button>
-          <div className="link-scroll flex h-10 w-80 overflow-x-auto overflow-y-hidden bg-transparent py-2 px-3 pr-24 text-sm">
+          <div className="link-scroll circular flex h-10 w-80 overflow-x-auto overflow-y-hidden bg-transparent py-2 px-3 pr-24 text-sm font-normal">
             <div className="z-0">
               https://synclist.ishaand.com/editor/8916348713647
             </div>

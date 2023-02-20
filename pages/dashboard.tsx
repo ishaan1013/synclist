@@ -32,7 +32,7 @@ const Dashboard = ({
         <meta name="description" content="" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="flex h-full">
+      <div className="dashboard-scroll flex h-full overflow-x-auto">
         <Sidebar />
         {/* <div className="w-96 text-xs text-zinc-500">
           {JSON.stringify(data)}

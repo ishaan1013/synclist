@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { useAccountStore, usePlaylistStore } from "@/lib/state"
-import { Copy, LucideLogOut } from "lucide-react"
+import { Check, Copy, LucideLogOut } from "lucide-react"
 import { signOut } from "next-auth/react"
 import Image from "next/image"
 import { useEffect, useState } from "react"
@@ -23,6 +23,25 @@ const Sidebar = () => {
       setImage(p.images[0].url)
     }
   }, [selected])
+
+  const [copiedId, setCopiedId] = useState(false)
+  const [copiedUrl, setCopiedUrl] = useState(false)
+
+  useEffect(() => {
+    if (copiedId) {
+      setTimeout(() => {
+        setCopiedId(false)
+      }, 1000)
+    }
+  }, [copiedId])
+
+  useEffect(() => {
+    if (copiedUrl) {
+      setTimeout(() => {
+        setCopiedUrl(false)
+      }, 1000)
+    }
+  }, [copiedUrl])
 
   return (
     <div className="flex w-60 min-w-[15rem] flex-col items-center justify-between bg-zinc-900 py-10 px-3">
@@ -54,12 +73,24 @@ const Sidebar = () => {
           <>
             <div className="mt-2 h-0.5 w-full bg-zinc-800" />
             <div className="mt-4 flex w-full justify-between space-x-2">
-              <Button className="h-auto bg-zinc-800 py-1.5 px-3 text-sm hover:bg-zinc-700">
-                <Copy className="mr-1.5 h-3 w-3" />
+              <Button
+                onClick={() => setCopiedId(true)}
+                className="h-auto bg-zinc-800 py-1.5 px-3 text-sm hover:bg-zinc-700">
+                {copiedId ? (
+                  <Check className="mr-1.5 h-3 w-3" />
+                ) : (
+                  <Copy className="mr-1.5 h-3 w-3" />
+                )}
                 Room ID
               </Button>
-              <Button className="h-auto bg-zinc-800 py-1.5 px-3 text-sm hover:bg-zinc-700">
-                <Copy className="mr-1.5 h-3 w-3" />
+              <Button
+                onClick={() => setCopiedUrl(true)}
+                className="h-auto bg-zinc-800 py-1.5 px-3 text-sm hover:bg-zinc-700">
+                {copiedUrl ? (
+                  <Check className="mr-1.5 h-3 w-3" />
+                ) : (
+                  <Copy className="mr-1.5 h-3 w-3" />
+                )}
                 Invite URL
               </Button>
             </div>
