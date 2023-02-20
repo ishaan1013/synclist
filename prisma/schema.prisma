@@ -52,3 +52,10 @@ model VerificationToken {
 
   @@unique([identifier, token])
 }
+
+model Room {
+  id        String   @id
+  open      Boolean  @default(true)
+  playlist  String
+  createdAt DateTime @default(now())
+}

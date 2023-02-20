@@ -28,6 +28,7 @@
     "eslint": "8.34.0",
     "eslint-config-next": "13.1.6",
     "lucide-react": "^0.113.0",
+    "nanoid": "^4.0.1",
     "next": "13.1.6",
     "next-auth": "^4.19.2",
     "prettier": "^2.8.4",
