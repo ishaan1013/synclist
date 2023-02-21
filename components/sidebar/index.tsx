@@ -1,16 +1,18 @@
 import { Button } from "@/components/ui/button"
 import { useAccountStore, useStore } from "@/lib/state"
-import { Check, Copy, LucideLogOut } from "lucide-react"
+import { Check, Copy, Loader, Loader2, LucideLogOut } from "lucide-react"
 import { signOut } from "next-auth/react"
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 
-const Sidebar = () => {
+const Sidebar = ({ editing }: { editing: boolean }) => {
   const data = useAccountStore((state) => state.userData)
   const selected = useStore((state) => state.selected)
   const setSelected = useStore((state) => state.setSelected)
   const playlists = useStore((state) => state.playlists)
+
+  const others = useStore((state) => state.liveblocks.others)
 
   const [name, setName] = useState("")
   const [image, setImage] = useState("")
@@ -50,6 +52,7 @@ const Sidebar = () => {
         <Link href="/dashboard">
           <Button
             onClick={() => setSelected("")}
+            disabled={Boolean(selected) && !editing}
             className="group relative m-0 flex h-16 w-full items-center justify-start space-x-3 rounded-lg bg-transparent p-2 text-left hover:bg-zinc-800">
             <div className="relative z-0 aspect-square h-12 overflow-hidden rounded-md bg-zinc-600 bg-cover duration-200">
               {image ? (
@@ -73,35 +76,45 @@ const Sidebar = () => {
         </Link>
 
         {selected ? (
-          <>
-            <div className="mt-2 h-0.5 w-full bg-zinc-800" />
-            <div className="mt-4 flex w-full justify-between space-x-2">
-              <Button
-                onClick={() => setCopiedId(true)}
-                className="h-auto bg-zinc-800 py-1.5 px-3 text-sm hover:bg-zinc-700">
-                {copiedId ? (
-                  <Check className="mr-1.5 h-3 w-3" />
-                ) : (
-                  <Copy className="mr-1.5 h-3 w-3" />
-                )}
-                Room ID
-              </Button>
-              <Button
-                onClick={() => setCopiedUrl(true)}
-                className="h-auto bg-zinc-800 py-1.5 px-3 text-sm hover:bg-zinc-700">
-                {copiedUrl ? (
-                  <Check className="mr-1.5 h-3 w-3" />
-                ) : (
-                  <Copy className="mr-1.5 h-3 w-3" />
-                )}
-                Invite URL
-              </Button>
-            </div>
-            <div className="mt-3 flex items-center space-x-2 pl-3">
-              <div className="h-2 w-2 animate-pulse rounded-full bg-green-600" />
-              <div className="text-sm text-white">1 Collaborator Active</div>
-            </div>
-          </>
+          editing ? (
+            <>
+              <div className="mt-2 h-0.5 w-full bg-zinc-800" />
+              <div className="mt-4 flex w-full justify-between space-x-2">
+                <Button
+                  onClick={() => setCopiedId(true)}
+                  className="h-auto bg-zinc-800 py-1.5 px-3 text-sm hover:bg-zinc-700">
+                  {copiedId ? (
+                    <Check className="mr-1.5 h-3 w-3" />
+                  ) : (
+                    <Copy className="mr-1.5 h-3 w-3" />
+                  )}
+                  Room ID
+                </Button>
+                <Button
+                  onClick={() => setCopiedUrl(true)}
+                  className="h-auto bg-zinc-800 py-1.5 px-3 text-sm hover:bg-zinc-700">
+                  {copiedUrl ? (
+                    <Check className="mr-1.5 h-3 w-3" />
+                  ) : (
+                    <Copy className="mr-1.5 h-3 w-3" />
+                  )}
+                  Invite URL
+                </Button>
+              </div>
+              <div className="mt-3 flex items-center space-x-2 pl-3">
+                <div className="h-2 w-2 animate-pulse rounded-full bg-green-600" />
+                <div className="text-sm text-white">
+                  {others.length + 1} Collaborator{others.length > 0 ? "s" : ""}{" "}
+                  Active
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="mt-2 h-0.5 w-full bg-zinc-800" />
+              <Loader2 className="mt-6 h-8 w-8 animate-spin animate-pulse self-center text-zinc-500" />
+            </>
+          )
         ) : null}
       </div>
       <Button

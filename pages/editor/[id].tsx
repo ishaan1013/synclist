@@ -70,8 +70,7 @@ const EditorScreen = () => {
       <AddSongDialog open={songDialogOpen} setOpen={setSongDialogOpen} />
 
       <div className="dashboard-scroll flex h-full overflow-x-auto">
-        <Sidebar />
-        {/* <div className="w-52">{JSON.stringify(editorScroll)}</div> */}
+        <Sidebar editing />
         <Editor setEditorScroll={setEditorScroll} setOpen={setSongDialogOpen} />
       </div>
     </div>
