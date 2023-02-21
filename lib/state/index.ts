@@ -11,7 +11,9 @@ const client = createClient({
 
 type T = {
   playlists: any
-  setPlaylists: (playlist: any) => void
+  setPlaylists: (playlists: any) => void
+  songs: any[]
+  setSongs: (songs: any[]) => void
   selected: string
   setSelected: (selected: string) => void
   cursor: Cursor
@@ -22,9 +24,11 @@ export const useStore = create<WithLiveblocks<T>>()(
   liveblocks(
     (set) => ({
       playlists: [],
-      setPlaylists: (playlists: any) => set({ playlists }),
+      setPlaylists: (playlists) => set({ playlists }),
+      songs: [],
+      setSongs: (songs) => set({ songs }),
       selected: "",
-      setSelected: (selected: string) => set({ selected }),
+      setSelected: (selected) => set({ selected }),
       cursor: { x: 0, y: 0 },
       setCursor: (cursor) => set({ cursor }),
     }),
@@ -32,6 +36,9 @@ export const useStore = create<WithLiveblocks<T>>()(
       client,
       presenceMapping: {
         cursor: true,
+      },
+      storageMapping: {
+        songs: true,
       },
     }
   )

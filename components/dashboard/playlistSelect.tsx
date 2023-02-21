@@ -13,8 +13,6 @@ export const PlaylistSelect = () => {
   const selected = useStore((state) => state.selected)
   const setSelected = useStore((state) => state.setSelected)
 
-  const [error, setError] = useState(false)
-
   useEffect(() => {
     const getPlaylists = async () => {
       const res = await fetch(
@@ -25,7 +23,7 @@ export const PlaylistSelect = () => {
     console.log("use access token", accessToken)
 
     getPlaylists().then((res) => {
-      setPlaylists(res)
+      setPlaylists(res.playlists)
     })
   }, [accessToken])
 
@@ -69,8 +67,8 @@ export const PlaylistSelect = () => {
       {/* <div className="my-4 w-[900px] text-xs">{accessToken}</div> */}
       <div className=" mt-8 flex w-full max-w-screen-lg flex-wrap gap-4">
         {selecting ? (
-          playlists.playlists ? (
-            playlists.playlists?.items?.map((playlist: any, i: number) => (
+          playlists ? (
+            playlists?.items?.map((playlist: any, i: number) => (
               <Button
                 key={i}
                 className="h-auto w-52 flex-col items-start justify-start rounded-lg p-3 text-base"
@@ -103,9 +101,8 @@ export const PlaylistSelect = () => {
               Creating your collaborative room for{" "}
               <span className="font-bold underline underline-offset-2">
                 {
-                  playlists.playlists?.items.find(
-                    (item: any) => item.id === selected
-                  )?.name
+                  playlists?.items.find((item: any) => item.id === selected)
+                    ?.name
                 }
               </span>
             </div>

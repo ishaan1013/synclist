@@ -18,8 +18,8 @@ const Sidebar = ({ editing }: { editing: boolean }) => {
   const [image, setImage] = useState("")
 
   useEffect(() => {
-    if (playlists.playlists && selected) {
-      const p = playlists.playlists?.items.find(
+    if (playlists && selected) {
+      const p = playlists?.items.find(
         (item: any) => item.id === selected
       )
       setName(p.name)

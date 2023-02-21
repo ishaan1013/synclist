@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { Dispatch, useEffect, useState } from "react"
 import {
   DndContext,
   DragOverlay,
@@ -19,8 +19,13 @@ import {
 import Song from "./song"
 import SortableSong from "./sortableSong"
 
-const List = ({ songs }: { songs: any }) => {
-  const [items, setItems] = useState<any>(null)
+const List = ({
+  songs,
+  setSongs,
+}: {
+  songs: any
+  setSongs: Dispatch<React.SetStateAction<any>>
+}) => {
   const [active, setActive] = useState<any>(null)
   const [activeId, setActiveId] = useState<string | null>(null)
   const sensors = useSensors(
@@ -33,7 +38,7 @@ const List = ({ songs }: { songs: any }) => {
     const { active, over } = event
 
     if (active?.id !== over?.id) {
-      setItems((items: any) => {
+      setSongs((items: any) => {
         const oldIndex = items.indexOf(
           items?.find((item: any) => item?.track?.id === active?.id)
         )
@@ -53,7 +58,7 @@ const List = ({ songs }: { songs: any }) => {
   }
 
   useEffect(() => {
-    const a = items?.find((item: any) => item?.track?.id === activeId)
+    const a = songs?.find((item: any) => item?.track?.id === activeId)
     setActive(a)
   }, [activeId])
 
@@ -62,10 +67,6 @@ const List = ({ songs }: { songs: any }) => {
 
     setActiveId(active.id)
   }
-
-  useEffect(() => {
-    setItems(songs?.songs?.items)
-  }, [songs])
 
   return (
     <>
@@ -79,12 +80,12 @@ const List = ({ songs }: { songs: any }) => {
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}>
         <div className="mt-8 flex w-full max-w-screen-xs flex-col space-y-2 2xl:max-w-screen-sm">
-          {items ? (
+          {songs ? (
             <SortableContext
-              items={items}
+              items={songs}
               strategy={verticalListSortingStrategy}>
-              {items ? (
-                items.map((song: any, i: number) => (
+              {songs ? (
+                songs.map((song: any, i: number) => (
                   <SortableSong key={i} id={song.track?.id} song={song} />
                 ))
               ) : (

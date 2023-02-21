@@ -17,7 +17,8 @@ const Editor = ({
   const selected = useStore((state) => state.selected)
   const data = useAccountStore((state) => state.userData)
 
-  const [songs, setSongs] = useState<any>(null)
+  const songs = useStore((state) => state.songs)
+  const setSongs = useStore((state) => state.setSongs)
 
   const ref = useRef<HTMLDivElement>(null)
 
@@ -32,7 +33,7 @@ const Editor = ({
       console.log("use acccess token", accessToken)
 
       getPlaylistSongs().then((res) => {
-        setSongs(res)
+        setSongs(res?.songs?.items)
       })
     }
   }, [selected, accessToken])
@@ -74,7 +75,7 @@ const Editor = ({
       {/* <div className="mt-8 min-h-[400px] w-[900px] overflow-auto whitespace-pre text-xs">
         {JSON.stringify(songs, null, "\t")}
       </div> */}
-      <List songs={songs} />
+      <List songs={songs} setSongs={setSongs} />
     </div>
   )
 }
