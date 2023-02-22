@@ -1,5 +1,3 @@
-import songType from "../songType"
-
 export const moveSong = async (
   playlist: string,
   accessToken: string,

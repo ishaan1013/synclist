@@ -37,12 +37,12 @@ const Editor = ({
         if (res?.songs?.items) {
           const songs: songType[] = res?.songs?.items.map((song: any) => {
             return {
-              id: song.track.id,
-              title: song.track.name,
-              artist: song.track.artists[0].name,
-              cover: song.track.album.images[0].url,
-              songExt: song.track.external_urls.spotify,
-              artistExt: song.track.artists[0].external_urls.spotify,
+              id: song?.track?.id,
+              title: song?.track?.name,
+              artist: song?.track?.artists[0].name,
+              cover: song?.track?.album.images[0].url,
+              songExt: song?.track?.external_urls.spotify,
+              artistExt: song?.track?.artists[0].external_urls.spotify,
             }
           })
           setSongs(songs)

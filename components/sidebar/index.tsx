@@ -6,9 +6,14 @@ import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 
-const Sidebar = ({ editing }: { editing: boolean }) => {
+const Sidebar = ({
+  editing,
+  selected,
+}: {
+  editing: boolean
+  selected?: any
+}) => {
   const data = useAccountStore((state) => state.userData)
-  const selected = useStore((state) => state.selected)
   const setSelected = useStore((state) => state.setSelected)
   const playlists = useStore((state) => state.playlists)
 
@@ -18,12 +23,12 @@ const Sidebar = ({ editing }: { editing: boolean }) => {
   const [image, setImage] = useState("")
 
   useEffect(() => {
-    if (playlists && selected) {
-      const p = playlists?.items.find((item: any) => item.id === selected)
-      setName(p.name)
-      setImage(p.images[0].url)
+    if (selected && playlists?.items) {
+      const p = playlists.items.find((item: any) => item.id === selected)
+      setName(p?.name)
+      setImage(p?.images[0].url)
     }
-  }, [selected])
+  }, [selected, playlists])
 
   const [copiedId, setCopiedId] = useState(false)
   const [copiedUrl, setCopiedUrl] = useState(false)

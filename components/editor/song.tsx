@@ -52,11 +52,11 @@ const Song = forwardRef(
           </div>
           <div className="ml-3">
             <div className="w-64 overflow-hidden text-ellipsis whitespace-nowrap text-sm font-medium 2xl:w-96">
-              {song.title}
+              {song?.title}
               {/* {id ?? "none"} */}
             </div>
             <div className="w-64 overflow-hidden text-ellipsis whitespace-nowrap text-xs font-normal text-zinc-500 2xl:w-96">
-              {song.artist}
+              {song?.artist}
             </div>
           </div>
         </div>

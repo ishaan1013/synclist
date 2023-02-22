@@ -16,6 +16,9 @@ export const authOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
     SpotifyProvider({
+      authorization:
+        "https://accounts.spotify.com/authorize?scope=user-read-email,user-read-private,playlist-read-private,playlist-read-collaborative,playlist-modify-private,playlist-modify-public",
+
       clientId: process.env.SPOTIFY_CLIENT_ID as string,
       clientSecret: process.env.SPOTIFY_CLIENT_SECRET as string,
     }),

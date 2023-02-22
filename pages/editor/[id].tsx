@@ -23,9 +23,10 @@ const COLORS = [
   "#ec4899",
 ]
 
-const EditorScreen = ({}: // user,
-// playlist,
-InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const EditorScreen = ({
+  user,
+  playlist,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const { data: session } = useSession()
   const data = session?.user
 
@@ -35,8 +36,8 @@ InferGetServerSidePropsType<typeof getServerSideProps>) => {
 
   useEffect(() => {
     setUserData(data)
-    // setAccessToken(user.accounts?.[0].access_token)
-    // setSelected(playlist)
+    setAccessToken(user.accounts?.[0].access_token)
+    setSelected(playlist)
   }, [])
 
   const {
@@ -51,9 +52,9 @@ InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const roomId = router.asPath.split("/")[2]
 
   useEffect(() => {
-    enterRoom("roomId")
+    enterRoom(roomId)
     return () => {
-      leaveRoom("roomId")
+      leaveRoom(roomId)
     }
   }, [enterRoom, leaveRoom])
 
@@ -80,8 +81,6 @@ InferGetServerSidePropsType<typeof getServerSideProps>) => {
         return (
           <Cursor
             key={`cursor-${connectionId}`}
-            // connectionId is an integer that is incremented at every new connections
-            // Assigning a color with a modulo makes sure that a specific user has the same colors on every clients
             color={COLORS[connectionId % COLORS.length]}
             // @ts-ignore
             x={presence?.cursor?.x}
@@ -94,7 +93,7 @@ InferGetServerSidePropsType<typeof getServerSideProps>) => {
       <AddSongDialog open={songDialogOpen} setOpen={setSongDialogOpen} />
 
       <div className="dashboard-scroll flex h-full overflow-x-auto">
-        <Sidebar editing />
+        <Sidebar editing selected={playlist} />
         <Editor setEditorScroll={setEditorScroll} setOpen={setSongDialogOpen} />
       </div>
     </div>
@@ -104,42 +103,42 @@ InferGetServerSidePropsType<typeof getServerSideProps>) => {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getServerSession(context.req, context.res, authOptions)
 
-  // if (!session) {
-  //   return {
-  //     redirect: {
-  //       destination: "/",
-  //       permanent: false,
-  //     },
-  //   }
-  // }
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    }
+  }
 
-  // const user = await prisma.user.findUnique({
-  //   where: {
-  //     email: session.user?.email ?? "",
-  //   },
-  //   include: {
-  //     accounts: true,
-  //   },
-  // })
+  const user = await prisma.user.findUnique({
+    where: {
+      email: session.user?.email ?? "",
+    },
+    include: {
+      accounts: true,
+    },
+  })
 
-  // const room = await prisma.room.findUnique({
-  //   where: {
-  //     id: typeof context.params?.id === "string" ? context.params.id : "",
-  //   },
-  // })
-  // console.log(
-  //   "🚀 ~ file: [id].tsx:131 ~ constgetServerSideProps:GetServerSideProps= ~ room:",
-  //   room
-  // )
-  // const playlist = room ? room.playlist : ""
+  const room = await prisma.room.findUnique({
+    where: {
+      id: typeof context.params?.id === "string" ? context.params.id : "",
+    },
+  })
+  console.log(
+    "🚀 ~ file: [id].tsx:131 ~ constgetServerSideProps:GetServerSideProps= ~ room:",
+    room
+  )
+  const playlist = room ? room.playlist : ""
 
-  // console.log(user)
+  console.log(user)
 
   return {
     props: {
       session,
-      // user,
-      // playlist,
+      user,
+      playlist,
     },
   }
 }

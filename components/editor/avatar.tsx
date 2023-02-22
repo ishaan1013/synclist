@@ -40,6 +40,7 @@ const Avatar = ({
                 className="min-h-full min-w-full object-cover"
                 src={src ?? ""}
                 alt={name + "'s avatar"}
+                sizes={"90px"}
                 fill
               />
             ) : null}

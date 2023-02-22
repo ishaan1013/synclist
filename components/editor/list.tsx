@@ -24,10 +24,10 @@ const List = ({
   songs,
   setSongs,
 }: {
-  songs: any
-  setSongs: Dispatch<React.SetStateAction<any>>
+  songs: songType[]
+  setSongs: (songs: songType[]) => void
 }) => {
-  const [active, setActive] = useState<any>(null)
+  const [active, setActive] = useState<songType>()
   const [activeId, setActiveId] = useState<string | null>(null)
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -40,20 +40,21 @@ const List = ({
 
     if (active?.id !== over?.id) {
       console.log("changing order at list.tsx line 41")
-      setSongs((items: any) => {
-        const oldIndex = items.indexOf(
-          items?.find((item: any) => item?.id === active?.id)
+      const change = () => {
+        const oldIndex = songs.indexOf(
+          songs.find((item: songType) => item?.id === active?.id)!
         )
-        const newIndex = items.indexOf(
-          items?.find((item: any) => item?.id === over?.id)
+        const newIndex = songs.indexOf(
+          songs.find((item: songType) => item?.id === over?.id)!
         )
 
         if (newIndex !== -1) {
-          return arrayMove(items, oldIndex, newIndex)
+          return arrayMove(songs, oldIndex, newIndex)
         } else {
-          return items
+          return songs
         }
-      })
+      }
+      setSongs(change())
     }
 
     setActiveId(null)
@@ -86,9 +87,9 @@ const List = ({
             <SortableContext
               items={songs}
               strategy={verticalListSortingStrategy}>
-              {songs ? (
-                songs.map((song: songType) => (
-                  <SortableSong key={song.id} id={song.id} song={song} />
+              {songs && songs.length > 0 ? (
+                songs?.map((song: songType, i: number) => (
+                  <SortableSong key={i} id={song.id} song={song} />
                 ))
               ) : (
                 <div>loading</div>
@@ -97,7 +98,7 @@ const List = ({
           ) : null}
         </div>
         <DragOverlay>
-          {activeId ? <Song id={activeId} song={active} /> : null}
+          {activeId && active ? <Song id={activeId} song={active} /> : null}
         </DragOverlay>
       </DndContext>
     </>
