@@ -13,7 +13,7 @@ const Page404 = () => {
       </Head>
 
       <div className="flex w-full max-w-screen-lg flex-col items-center">
-        <div className="text-center text-5xl">404: You're lost.</div>
+        <div className="text-center text-5xl">404: You&apos;re lost.</div>
         <div className="mt-8 flex space-x-4">
           <Link href="/">
             <Button size="lg">
