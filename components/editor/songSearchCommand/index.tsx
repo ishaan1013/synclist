@@ -7,6 +7,8 @@ import { Dispatch, useEffect, useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { useAccountStore, useSongSearchStore } from "@/lib/state"
 import Image from "next/image"
+import songType from "@/lib/songType"
+import { searchSongs } from "@/lib/client"
 
 const SongSearchCommand = ({
   open,
@@ -43,21 +45,11 @@ const SongSearchCommand = ({
   const [songs, setSongs] = useState<any[]>([])
   const accessToken = useAccountStore((state) => state.accessToken)
 
-  const searchSongs = async (q: string) => {
-    console.log("accessToken", accessToken)
-    console.log("q", q)
-    const res = await fetch(
-      `/api/spotify/searchSongs?q=${q}&accessToken=${accessToken}`
-    )
-    const json = await res.json()
-    setSongs(json.songs?.tracks?.items)
-  }
-
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
       setQuery(search)
       if (search) {
-        searchSongs(search)
+        searchSongs(search, accessToken, setSongs)
       }
     }, 600)
 
