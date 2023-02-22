@@ -18,6 +18,7 @@ import {
 
 import Song from "./song"
 import SortableSong from "./sortableSong"
+import songType from "@/lib/songType"
 
 const List = ({
   songs,
@@ -86,8 +87,8 @@ const List = ({
               items={songs}
               strategy={verticalListSortingStrategy}>
               {songs ? (
-                songs.map((song: any, i: number) => (
-                  <SortableSong key={i} id={song.track?.id} song={song} />
+                songs.map((song: songType) => (
+                  <SortableSong key={song.id} id={song.id} song={song} />
                 ))
               ) : (
                 <div>loading</div>
