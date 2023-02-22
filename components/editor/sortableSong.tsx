@@ -1,8 +1,9 @@
+import songType from "@/lib/songType"
 import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
 import Song from "./song"
 
-const SortableSong = ({ song, id }: { song: any; id: string }) => {
+const SortableSong = ({ song, id }: { song: songType; id: string }) => {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id })
 

@@ -23,10 +23,9 @@ const COLORS = [
   "#ec4899",
 ]
 
-const EditorScreen = ({
-  user,
-  playlist,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const EditorScreen = ({}: // user,
+// playlist,
+InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const { data: session } = useSession()
   const data = session?.user
 
@@ -36,8 +35,8 @@ const EditorScreen = ({
 
   useEffect(() => {
     setUserData(data)
-    setAccessToken(user.accounts?.[0].access_token)
-    setSelected(playlist)
+    // setAccessToken(user.accounts?.[0].access_token)
+    // setSelected(playlist)
   }, [])
 
   const {
@@ -52,9 +51,9 @@ const EditorScreen = ({
   const roomId = router.asPath.split("/")[2]
 
   useEffect(() => {
-    enterRoom(roomId)
+    enterRoom("roomId")
     return () => {
-      leaveRoom(roomId)
+      leaveRoom("roomId")
     }
   }, [enterRoom, leaveRoom])
 
@@ -105,42 +104,42 @@ const EditorScreen = ({
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getServerSession(context.req, context.res, authOptions)
 
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    }
-  }
+  // if (!session) {
+  //   return {
+  //     redirect: {
+  //       destination: "/",
+  //       permanent: false,
+  //     },
+  //   }
+  // }
 
-  const user = await prisma.user.findUnique({
-    where: {
-      email: session.user?.email ?? "",
-    },
-    include: {
-      accounts: true,
-    },
-  })
+  // const user = await prisma.user.findUnique({
+  //   where: {
+  //     email: session.user?.email ?? "",
+  //   },
+  //   include: {
+  //     accounts: true,
+  //   },
+  // })
 
-  const room = await prisma.room.findUnique({
-    where: {
-      id: typeof context.params?.id === "string" ? context.params.id : "",
-    },
-  })
-  console.log(
-    "🚀 ~ file: [id].tsx:131 ~ constgetServerSideProps:GetServerSideProps= ~ room:",
-    room
-  )
-  const playlist = room ? room.playlist : ""
+  // const room = await prisma.room.findUnique({
+  //   where: {
+  //     id: typeof context.params?.id === "string" ? context.params.id : "",
+  //   },
+  // })
+  // console.log(
+  //   "🚀 ~ file: [id].tsx:131 ~ constgetServerSideProps:GetServerSideProps= ~ room:",
+  //   room
+  // )
+  // const playlist = room ? room.playlist : ""
 
   // console.log(user)
 
   return {
     props: {
       session,
-      user,
-      playlist,
+      // user,
+      // playlist,
     },
   }
 }

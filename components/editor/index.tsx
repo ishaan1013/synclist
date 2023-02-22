@@ -38,7 +38,7 @@ const Editor = ({
           const songs: songType[] = res?.songs?.items.map((song: any) => {
             return {
               id: song.track.id,
-              name: song.track.name,
+              title: song.track.name,
               artist: song.track.artists[0].name,
               cover: song.track.album.images[0].url,
               songExt: song.track.external_urls.spotify,

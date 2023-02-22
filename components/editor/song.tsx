@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { GripVertical, Mic2, MoreVertical, Music, Trash2 } from "lucide-react"
 import { circular } from "@/pages/_app"
+import songType from "@/lib/songType"
 
 const Song = forwardRef(
   (
@@ -18,7 +19,7 @@ const Song = forwardRef(
       id,
       attributes,
       listeners,
-    }: { song: any; id: string; attributes?: any; listeners?: any },
+    }: { song: songType; id: string; attributes?: any; listeners?: any },
     ref: ForwardedRef<HTMLDivElement>
   ) => {
     return (
@@ -51,11 +52,11 @@ const Song = forwardRef(
           </div>
           <div className="ml-3">
             <div className="w-64 overflow-hidden text-ellipsis whitespace-nowrap text-sm font-medium 2xl:w-96">
-              {song?.name}
+              {song.title}
               {/* {id ?? "none"} */}
             </div>
             <div className="w-64 overflow-hidden text-ellipsis whitespace-nowrap text-xs font-normal text-zinc-500 2xl:w-96">
-              {song?.artist}
+              {song.artist}
             </div>
           </div>
         </div>
