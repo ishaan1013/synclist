@@ -32,8 +32,9 @@ export const PlaylistSelect = () => {
 
   const [roomId, setRoomId] = useState<string | null>(null)
 
-  const createRoom = async () => {
-    const res = await fetch(`/api/createRoom?playlist=${selected}`, {
+  const createRoom = async (id: string) => {
+    console.log("creating room with playlist: ", id)
+    const res = await fetch(`/api/createRoom?playlist=${id}`, {
       method: "POST",
     })
     const data = await res.json()
@@ -46,7 +47,7 @@ export const PlaylistSelect = () => {
     setSelecting(false)
     console.log(selected)
 
-    createRoom()
+    createRoom(id)
   }
 
   useEffect(() => {
@@ -56,7 +57,7 @@ export const PlaylistSelect = () => {
   }, [roomId])
 
   return (
-    <div className="flex h-full flex-grow flex-col items-start justify-start overflow-y-auto p-12">
+    <div className="flex h-full min-w-[650px] flex-grow flex-col  items-start justify-start overflow-y-auto p-12">
       <div className="flex w-full items-center justify-between">
         <div className="text-3xl font-medium">Select A Playlist</div>
         <Button disabled={!selecting} className="text-base">
@@ -79,6 +80,7 @@ export const PlaylistSelect = () => {
                     src={playlist.images[0].url}
                     alt="playlist image"
                     fill
+                    sizes="250px"
                     className="min-h-full min-w-full object-cover"
                   />
                 </div>

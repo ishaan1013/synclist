@@ -5,6 +5,7 @@ import { Dispatch, useCallback, useEffect, useRef, useState } from "react"
 import List from "./list"
 import Avatar from "./avatar"
 import LinkPopover from "./linkPopover"
+import songType from "@/lib/songType"
 
 const Editor = ({
   setEditorScroll,
@@ -15,6 +16,7 @@ const Editor = ({
 }) => {
   const accessToken = useAccountStore((state) => state.accessToken)
   const selected = useStore((state) => state.selected)
+  const setSelected = useStore((state) => state.setSelected)
   const data = useAccountStore((state) => state.userData)
 
   const songs = useStore((state) => state.songs)
@@ -30,13 +32,26 @@ const Editor = ({
         )
         return await res.json()
       }
-      console.log("use acccess token", accessToken)
 
       getPlaylistSongs().then((res) => {
-        setSongs(res?.songs?.items)
+        if (res?.songs?.items) {
+          const songs: songType[] = res?.songs?.items.map((song: any) => {
+            return {
+              id: song.track.id,
+              name: song.track.name,
+              artist: song.track.artists[0].name,
+              cover: song.track.album.images[0].url,
+              songExt: song.track.external_urls.spotify,
+              artistExt: song.track.artists[0].external_urls.spotify,
+            }
+          })
+          setSongs(songs)
+          // console.log("setting playlist songs to: ", songs)
+        }
       })
     }
   }, [selected, accessToken])
+  // }, [selected, accessToken, songs])
 
   const onScroll = useCallback(() => {
     const scrollY = window.scrollY
@@ -56,7 +71,11 @@ const Editor = ({
       <div className="flex w-full items-center justify-between">
         <div className="flex items-center space-x-6">
           <div className="text-3xl font-medium">Playlist Editor</div>
-          <Button onClick={() => setOpen(true)} className="text-base">
+          <Button
+            onClick={() => {
+              setOpen(true)
+            }}
+            className="text-base">
             Add Song
             <div className="ml-2.5 flex items-center text-zinc-500">
               <Command className="h-3.5 w-3.5" />
@@ -71,10 +90,11 @@ const Editor = ({
           <LinkPopover />
         </div>
       </div>
-      {/* <div className="my-4 w-[900px] text-xs">{accessToken}</div> */}
+      {/* <div className="my-4 w-[900px] text-xs">{selected}</div> */}
       {/* <div className="mt-8 min-h-[400px] w-[900px] overflow-auto whitespace-pre text-xs">
         {JSON.stringify(songs, null, "\t")}
       </div> */}
+
       <List songs={songs} setSongs={setSongs} />
     </div>
   )

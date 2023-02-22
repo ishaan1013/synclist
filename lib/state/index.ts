@@ -2,6 +2,7 @@ import { createClient } from "@liveblocks/client"
 import { create } from "zustand"
 import { liveblocks } from "@liveblocks/zustand"
 import type { WithLiveblocks } from "@liveblocks/zustand"
+import songType from "../songType"
 
 type Cursor = { x: number; y: number }
 
@@ -12,8 +13,8 @@ const client = createClient({
 type T = {
   playlists: any
   setPlaylists: (playlists: any) => void
-  songs: any[]
-  setSongs: (songs: any[]) => void
+  songs: songType[]
+  setSongs: (songs: songType[]) => void
   selected: string
   setSelected: (selected: string) => void
   cursor: Cursor
@@ -39,9 +40,11 @@ export const useStore = create<WithLiveblocks<T>>()(
       },
       storageMapping: {
         songs: true,
+        selected: true,
       },
     }
   )
 )
 
 export * from "./account"
+export * from "./songSearch"

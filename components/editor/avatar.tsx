@@ -35,12 +35,14 @@ const Avatar = ({
       <Tooltip>
         <TooltipTrigger className="rounded-full">
           <div className={avatarCn}>
-            <Image
-              className="min-h-full min-w-full object-cover"
-              src={src ?? ""}
-              alt={name + "'s avatar"}
-              fill
-            />
+            {src ? (
+              <Image
+                className="min-h-full min-w-full object-cover"
+                src={src ?? ""}
+                alt={name + "'s avatar"}
+                fill
+              />
+            ) : null}
           </div>
         </TooltipTrigger>
         <TooltipContent side="bottom">

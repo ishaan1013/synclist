@@ -39,27 +39,23 @@ const Song = forwardRef(
             </button>
           )}
           <div className="relative z-0 ml-2 aspect-square h-12 overflow-hidden rounded-md bg-zinc-600 bg-cover duration-200">
-            {song?.track?.album?.images?.[0]?.url ? (
+            {song?.cover ? (
               <Image
                 className="min-h-full min-w-full object-cover"
-                src={song?.track?.album?.images?.[0]?.url ?? ""}
+                src={song?.cover ?? ""}
                 alt=""
+                sizes="90px"
                 fill
               />
             ) : null}
           </div>
           <div className="ml-3">
             <div className="w-64 overflow-hidden text-ellipsis whitespace-nowrap text-sm font-medium 2xl:w-96">
-              {song?.track?.name}
+              {song?.name}
               {/* {id ?? "none"} */}
             </div>
-            <div className="flex w-64 items-center space-x-1 overflow-hidden text-ellipsis whitespace-nowrap text-xs font-normal text-zinc-500 2xl:w-96">
-              {song?.track?.artists?.map((artist: any, i: number) => (
-                <div key={artist.name + song.track.name}>
-                  {artist.name +
-                    (i < song?.track?.artists?.length - 1 ? "," : "")}
-                </div>
-              ))}
+            <div className="w-64 overflow-hidden text-ellipsis whitespace-nowrap text-xs font-normal text-zinc-500 2xl:w-96">
+              {song?.artist}
             </div>
           </div>
         </div>

@@ -38,12 +38,13 @@ const List = ({
     const { active, over } = event
 
     if (active?.id !== over?.id) {
+      console.log("changing order at list.tsx line 41")
       setSongs((items: any) => {
         const oldIndex = items.indexOf(
-          items?.find((item: any) => item?.track?.id === active?.id)
+          items?.find((item: any) => item?.id === active?.id)
         )
         const newIndex = items.indexOf(
-          items?.find((item: any) => item?.track?.id === over?.id)
+          items?.find((item: any) => item?.id === over?.id)
         )
 
         if (newIndex !== -1) {
@@ -58,7 +59,7 @@ const List = ({
   }
 
   useEffect(() => {
-    const a = songs?.find((item: any) => item?.track?.id === activeId)
+    const a = songs?.find((item: any) => item?.id === activeId)
     setActive(a)
   }, [activeId])
 

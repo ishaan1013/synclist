@@ -19,9 +19,7 @@ const Sidebar = ({ editing }: { editing: boolean }) => {
 
   useEffect(() => {
     if (playlists && selected) {
-      const p = playlists?.items.find(
-        (item: any) => item.id === selected
-      )
+      const p = playlists?.items.find((item: any) => item.id === selected)
       setName(p.name)
       setImage(p.images[0].url)
     }
@@ -124,12 +122,15 @@ const Sidebar = ({ editing }: { editing: boolean }) => {
           <LucideLogOut className="h-7 w-7 text-white" />
         </div> */}
         <div className="relative z-0 aspect-square h-12 overflow-hidden rounded-md bg-zinc-600 bg-cover duration-200">
-          <Image
-            className="min-h-full min-w-full object-cover"
-            src={data?.image ?? ""}
-            alt=""
-            fill
-          />
+          {data?.image ? (
+            <Image
+              className="min-h-full min-w-full object-cover"
+              src={data?.image ?? ""}
+              alt=""
+              sizes="128px"
+              fill
+            />
+          ) : null}
         </div>
         <div className="-space-y-1">
           <div className="w-[8.5rem] overflow-hidden text-ellipsis whitespace-nowrap text-left font-medium text-white">

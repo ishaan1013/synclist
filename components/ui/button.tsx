@@ -14,7 +14,7 @@ const buttonVariants = cva(
         subtle: "bg-zinc-100 text-zinc-900 hover:bg-zinc-200",
         ghost:
           "bg-transparent hover:bg-zinc-100 data-[state=open]:bg-transparent",
-        link: "bg-transparent underline-offset-4 hover:underline text-zinc-900 hover:bg-transparent",
+        link: "bg-transparent underline-offset-2 hover:underline text-zinc-900 hover:bg-transparent",
       },
       size: {
         default: "h-10 py-2 px-4",
