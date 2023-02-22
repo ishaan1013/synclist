@@ -83,6 +83,7 @@ const SongSearchCommand = ({
                 {songs &&
                   songs.map((song: any, i: number) => (
                     <Button
+                      key={i}
                       variant="ghost"
                       className="h-auto w-full justify-start p-2">
                       <div className="relative mr-2.5 aspect-square h-10 overflow-hidden rounded-md bg-zinc-600 bg-cover">
