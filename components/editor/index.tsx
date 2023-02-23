@@ -46,7 +46,6 @@ const Editor = ({
             }
           })
           setSongs(songs)
-          // console.log("setting playlist songs to: ", songs)
         }
       })
     }
@@ -56,9 +55,6 @@ const Editor = ({
   const onScroll = useCallback(() => {
     const scrollY = window.scrollY
     if (ref?.current) {
-      console.log(
-        `onScroll, window.scrollY: ${scrollY} myRef.scrollTop: ${ref.current.scrollTop}`
-      )
       setEditorScroll(ref.current.scrollTop)
     }
   }, [setEditorScroll])

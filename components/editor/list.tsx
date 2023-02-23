@@ -19,6 +19,7 @@ import {
 import Song from "./song"
 import SortableSong from "./sortableSong"
 import songType from "@/lib/songType"
+import { Loader2 } from "lucide-react"
 
 const List = ({
   songs,
@@ -39,7 +40,6 @@ const List = ({
     const { active, over } = event
 
     if (active?.id !== over?.id) {
-      console.log("changing order at list.tsx line 41")
       const change = () => {
         const oldIndex = songs.indexOf(
           songs.find((item: songType) => item?.id === active?.id)!
@@ -92,7 +92,11 @@ const List = ({
                   <SortableSong key={i} id={song.id} song={song} />
                 ))
               ) : (
-                <div>loading</div>
+                <div>
+                  <Loader2 className="mt-4 h-8 w-8 animate-spin animate-pulse self-center text-zinc-500" />
+
+                  <div className="mt-8 text-sm">Loading your playlist...</div>
+                </div>
               )}
             </SortableContext>
           ) : null}

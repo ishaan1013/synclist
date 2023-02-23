@@ -8,7 +8,7 @@ import { prisma } from "@/lib/prisma"
 import Sidebar from "@/components/sidebar"
 import { PlaylistSelect } from "@/components/dashboard"
 import { useEffect } from "react"
-import { useAccountStore } from "@/lib/state"
+import { UDataType, useAccountStore } from "@/lib/state"
 
 const Dashboard = ({
   user,
@@ -20,8 +20,17 @@ const Dashboard = ({
   const setAccessToken = useAccountStore((state) => state.setAccessToken)
 
   useEffect(() => {
-    setUserData(data)
     setAccessToken(user.accounts?.[0].access_token)
+
+    const userData: UDataType = {
+      id: user.accounts?.[0].providerAccountId,
+      userExt: user.accounts?.[0].providerAccountId,
+      email: data?.email,
+      name: data?.name,
+      image: data?.image,
+    }
+    console.log("🚀 ~ file: dashboard.tsx:39 ~ getUserId ~ userData:", userData)
+    setUserData(userData)
   }, [])
 
   return (
@@ -33,9 +42,7 @@ const Dashboard = ({
       </Head>
       <div className="dashboard-scroll flex h-full overflow-x-auto">
         <Sidebar editing={false} />
-        {/* <div className="w-96 text-xs text-zinc-500">
-          {JSON.stringify(data)}
-        </div> */}
+        {/* <div className="w-96 text-xs text-zinc-500">{JSON.stringify(data)}</div> */}
         <PlaylistSelect />
       </div>
     </div>

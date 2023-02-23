@@ -67,7 +67,6 @@ const SongSearchCommand = ({
       songs,
       setSongs,
     })
-    console.log("addRes:", addRes)
     setOpen(false)
   }
 
@@ -92,7 +91,7 @@ const SongSearchCommand = ({
                     <Button
                       key={i}
                       onClick={() => {
-                        console.log(song)
+                        song
                         handleSelect({
                           song: {
                             id: song.id,

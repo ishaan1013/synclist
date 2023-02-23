@@ -12,6 +12,9 @@ import Editor from "@/components/editor"
 import Cursor from "@/components/editor/cursor"
 import AddSongDialog from "@/components/editor/songSearchCommand"
 import { useRouter } from "next/router"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
+import { ArrowRight } from "lucide-react"
 
 const COLORS = [
   "#3b82f6",
@@ -44,17 +47,17 @@ const EditorScreen = ({
     liveblocks: { enterRoom, leaveRoom },
   } = useStore()
   const others = useStore((state) => state.liveblocks.others)
-  // const cursor = useStore((state) => state.cursor)
   const setCursor = useStore((state) => state.setCursor)
-  // const othersCursors = others.map((user) => user.presence.cursor)
 
   const router = useRouter()
   const roomId = router.asPath.split("/")[2]
 
   useEffect(() => {
-    enterRoom(roomId)
-    return () => {
-      leaveRoom(roomId)
+    if (playlist) {
+      enterRoom(roomId)
+      return () => {
+        leaveRoom(roomId)
+      }
     }
   }, [enterRoom, leaveRoom])
 
@@ -73,29 +76,61 @@ const EditorScreen = ({
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {others.map(({ connectionId, presence }) => {
-        if (presence.cursor === null || !presence.cursor) {
-          return null
-        }
-
-        return (
-          <Cursor
-            key={`cursor-${connectionId}`}
-            color={COLORS[connectionId % COLORS.length]}
-            // @ts-ignore
-            x={presence?.cursor?.x}
-            // @ts-ignore
-            y={presence?.cursor?.y - editorScroll}
-          />
-        )
-      })}
-
-      <AddSongDialog open={songDialogOpen} setOpen={setSongDialogOpen} />
-
-      <div className="dashboard-scroll flex h-full overflow-x-auto">
-        <Sidebar editing selected={playlist} />
-        <Editor setEditorScroll={setEditorScroll} setOpen={setSongDialogOpen} />
-      </div>
+      {playlist ? (
+        <>
+          {session ? (
+            <>
+              {others.map(({ connectionId, presence }) => {
+                if (presence.cursor === null || !presence.cursor) {
+                  return null
+                }
+                return (
+                  <Cursor
+                    key={`cursor-${connectionId}`}
+                    color={COLORS[connectionId % COLORS.length]}
+                    // @ts-ignore
+                    x={presence?.cursor?.x}
+                    // @ts-ignore
+                    y={presence?.cursor?.y - editorScroll}
+                  />
+                )
+              })}
+              <AddSongDialog
+                open={songDialogOpen}
+                setOpen={setSongDialogOpen}
+              />
+              <div className="dashboard-scroll flex h-full overflow-x-auto">
+                <Sidebar editing selected={playlist} />
+                {/* <div>{JSON.stringify(playlist)}</div> */}
+                <Editor
+                  setEditorScroll={setEditorScroll}
+                  setOpen={setSongDialogOpen}
+                />
+              </div>
+            </>
+          ) : (
+            <div className="flex h-full w-full flex-col items-center justify-center overflow-hidden">
+              <div className="mb-8 text-4xl">
+                Log in to start editing playlists!
+              </div>
+              <Button size="lg" variant={"default"}>
+                <Link href="/" className="flex items-center">
+                  Take Me There <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
+          )}
+        </>
+      ) : (
+        <div className="flex h-full w-full flex-col items-center justify-center overflow-hidden">
+          <div className="mb-8 text-4xl">This editing room doesn't exist!</div>
+          <Button size="lg" variant={"default"}>
+            <Link href="/dashboard" className="flex items-center">
+              Select A Playlist To Edit <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
+          </Button>
+        </div>
+      )}
     </div>
   )
 }
