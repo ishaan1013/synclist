@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { useAccountStore, useStore } from "@/lib/state"
-import { Check, Copy, Loader, Loader2, LucideLogOut } from "lucide-react"
+import { cn } from "@/lib/utils"
+import { Check, ChevronLeft, Copy, Loader2 } from "lucide-react"
 import { signOut } from "next-auth/react"
 import Image from "next/image"
 import Link from "next/link"
@@ -19,6 +20,19 @@ const Sidebar = ({
   const playlists = useStore((state) => state.playlists)
 
   const others = useStore((state) => state.liveblocks.others)
+
+  const [expanded, setExpanded] = useState(false)
+  const [expandedUI, setExpandedUI] = useState(false)
+
+  useEffect(() => {
+    if (expanded) {
+      setTimeout(() => {
+        setExpandedUI(true)
+      }, 100)
+    } else {
+      setExpandedUI(false)
+    }
+  }, [expanded])
 
   const [name, setName] = useState("")
   const [image, setImage] = useState("")
@@ -54,14 +68,33 @@ const Sidebar = ({
   const roomId = router.asPath.split("/")[2]
 
   return (
-    <div className="flex w-60 min-w-[15rem] flex-col items-center justify-between bg-zinc-900 py-10 px-3">
+    <div
+      className={cn(
+        expanded ? "w-60 min-w-[15rem]" : "w-20 min-w-[5.5rem]",
+        "relative flex flex-col items-center justify-between bg-zinc-900 py-10 px-3 duration-100"
+      )}>
+      <Button
+        variant="subtle"
+        size="sm"
+        onClick={() => setExpanded((prev) => !prev)}
+        className={cn(
+          expanded ? "rotate-0" : "rotate-180",
+          "absolute right-0 top-1/2 h-6 w-6 translate-x-1/2 -translate-y-1/2 rounded-full border border-zinc-200 p-1 text-xs shadow-[0_0px_20px_2px] shadow-zinc-900/50 duration-100"
+        )}>
+        <ChevronLeft className="" />
+      </Button>
       <div className="flex w-full flex-col">
-        <Link href="/dashboard">
-          <Button
-            onClick={() => setSelected("")}
-            disabled={Boolean(selected) && !editing}
-            className="group relative m-0 flex h-16 w-full items-center justify-start space-x-3 rounded-lg bg-transparent p-2 text-left hover:bg-zinc-800">
-            <div className="relative z-0 aspect-square h-12 overflow-hidden rounded-md bg-zinc-600 bg-cover duration-200">
+        <Button
+          onClick={() => setSelected("")}
+          disabled={Boolean(selected) && !editing}
+          className={cn(
+            !expandedUI && "max-w-[4rem]",
+            "group relative m-0 h-16 w-full rounded-lg bg-transparent p-2 text-left hover:bg-zinc-800"
+          )}>
+          <Link
+            href="/dashboard"
+            className="flex h-full w-full items-center justify-start">
+            <div className="relative z-0 aspect-square h-12 overflow-hidden rounded-md bg-zinc-600 bg-cover duration-100">
               {image ? (
                 <Image
                   className="min-h-full min-w-full object-cover"
@@ -71,58 +104,71 @@ const Sidebar = ({
                 />
               ) : null}
             </div>
-            <div className="-space-y-1">
-              <div className="w-[8.5rem] overflow-hidden text-ellipsis whitespace-nowrap text-left font-medium text-white">
-                {selected ? name : "No Playlist Selected"}
+            {expandedUI ? (
+              <div className="ml-3 -space-y-1">
+                <div className="w-[8.5rem] overflow-hidden text-ellipsis whitespace-nowrap text-left font-medium text-white">
+                  {selected ? name : "No Playlist Selected"}
+                </div>
+                <div className="w-[8.5rem] overflow-hidden text-ellipsis whitespace-nowrap text-left text-sm font-normal text-zinc-500">
+                  {selected ? "Change Playlist" : "(Select or create)"}
+                </div>
               </div>
-              <div className="w-[8.5rem] overflow-hidden text-ellipsis whitespace-nowrap text-left text-sm font-normal text-zinc-500">
-                {selected ? "Change Playlist" : "(Select or create)"}
-              </div>
-            </div>
-          </Button>
-        </Link>
+            ) : null}
+          </Link>
+        </Button>
 
         {selected ? (
           editing ? (
             <>
-              <div className="mt-2 h-0.5 w-full bg-zinc-800" />
-              <div className="mt-4 flex w-full justify-between space-x-2">
-                <Button
-                  onClick={() => {
-                    navigator.clipboard.writeText(roomId)
-                    setCopiedId(true)
-                  }}
-                  className="h-auto bg-zinc-800 py-1.5 px-3 text-sm hover:bg-zinc-700">
-                  {copiedId ? (
-                    <Check className="mr-1.5 h-3 w-3" />
-                  ) : (
-                    <Copy className="mr-1.5 h-3 w-3" />
-                  )}
-                  Room ID
-                </Button>
-                <Button
-                  onClick={() => {
-                    navigator.clipboard.writeText(
-                      `https://synclist.ishaand.com/editor/${roomId}`
-                    )
-                    setCopiedUrl(true)
-                  }}
-                  className="h-auto bg-zinc-800 py-1.5 px-3 text-sm hover:bg-zinc-700">
-                  {copiedUrl ? (
-                    <Check className="mr-1.5 h-3 w-3" />
-                  ) : (
-                    <Copy className="mr-1.5 h-3 w-3" />
-                  )}
-                  Invite URL
-                </Button>
-              </div>
-              <div className="mt-3 flex items-center space-x-2 pl-3">
-                <div className="h-2 w-2 animate-pulse rounded-full bg-green-600" />
-                <div className="text-sm text-white">
-                  {others.length + 1} Collaborator{others.length > 0 ? "s" : ""}{" "}
-                  Active
+              {expandedUI ? (
+                <>
+                  <div className="mt-2 h-0.5 w-full bg-zinc-800" />
+
+                  <div className="mt-4 flex w-full justify-between space-x-2">
+                    <Button
+                      onClick={() => {
+                        navigator.clipboard.writeText(roomId)
+                        setCopiedId(true)
+                      }}
+                      className="h-auto bg-zinc-800 py-1.5 px-3 text-sm hover:bg-zinc-700">
+                      {copiedId ? (
+                        <Check className="mr-1.5 h-3 w-3" />
+                      ) : (
+                        <Copy className="mr-1.5 h-3 w-3" />
+                      )}
+                      Room ID
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        navigator.clipboard.writeText(
+                          `https://synclist.ishaand.com/editor/${roomId}`
+                        )
+                        setCopiedUrl(true)
+                      }}
+                      className="h-auto bg-zinc-800 py-1.5 px-3 text-sm hover:bg-zinc-700">
+                      {copiedUrl ? (
+                        <Check className="mr-1.5 h-3 w-3" />
+                      ) : (
+                        <Copy className="mr-1.5 h-3 w-3" />
+                      )}
+                      Invite URL
+                    </Button>
+                  </div>
+
+                  <div className="mt-3 flex items-center space-x-2 pl-3">
+                    <div className="h-2 w-2 animate-pulse rounded-full bg-green-600" />
+                    <div className="text-sm text-white">
+                      {others.length + 1} Collaborator
+                      {others.length > 0 ? "s" : ""} Active
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <div className="mt-6 flex items-center space-x-2 self-center">
+                  <div className="h-2 w-2 animate-pulse rounded-full bg-green-600" />
+                  <div className="text-sm text-white">{others.length + 1}</div>
                 </div>
-              </div>
+              )}
             </>
           ) : (
             <>
@@ -134,11 +180,14 @@ const Sidebar = ({
       </div>
       <Button
         onClick={() => signOut()}
-        className="group relative m-0 flex h-16 w-full items-center justify-start space-x-3 rounded-lg bg-transparent p-2 text-left hover:bg-zinc-800">
-        {/* <div className="group-hover:opcity-100 absolute left-5 z-10 -translate-y-2 opacity-0 duration-200 group-hover:translate-y-0">
+        className={cn(
+          !expandedUI && "max-w-[4rem]",
+          "group relative m-0 flex h-16 w-full items-center justify-start rounded-lg bg-transparent p-2 text-left hover:bg-zinc-800"
+        )}>
+        {/* <div className="group-hover:opcity-100 absolute left-5 z-10 -translate-y-2 opacity-0 duration-100 group-hover:translate-y-0">
           <LucideLogOut className="h-7 w-7 text-white" />
         </div> */}
-        <div className="relative z-0 aspect-square h-12 overflow-hidden rounded-md bg-zinc-600 bg-cover duration-200">
+        <div className="relative z-0 aspect-square h-12 overflow-hidden rounded-md bg-zinc-600 bg-cover duration-100">
           {data?.image ? (
             <Image
               className="min-h-full min-w-full object-cover"
@@ -149,14 +198,16 @@ const Sidebar = ({
             />
           ) : null}
         </div>
-        <div className="-space-y-1">
-          <div className="w-[8.5rem] overflow-hidden text-ellipsis whitespace-nowrap text-left font-medium text-white">
-            {data?.name}
+        {expandedUI ? (
+          <div className="ml-3 -space-y-1">
+            <div className="w-[8.5rem] overflow-hidden text-ellipsis whitespace-nowrap text-left font-medium text-white">
+              {data?.name}
+            </div>
+            <div className="w-[8.5rem] overflow-hidden text-ellipsis whitespace-nowrap text-left text-sm font-normal text-zinc-500">
+              {data?.email}
+            </div>
           </div>
-          <div className="w-[8.5rem] overflow-hidden text-ellipsis whitespace-nowrap text-left text-sm font-normal text-zinc-500">
-            {data?.email}
-          </div>
-        </div>
+        ) : null}
       </Button>
     </div>
   )

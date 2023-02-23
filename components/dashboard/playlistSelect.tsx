@@ -108,7 +108,7 @@ export const PlaylistSelect = () => {
             <Loader2 className="mt-4 h-8 w-8 animate-spin animate-pulse self-center text-zinc-500" />
 
             <div className="mt-4 mb-8 text-sm">
-              Creating your collaborative room for{" "}
+              Creating a live editing room for{" "}
               <span className="font-bold underline underline-offset-2">
                 {
                   playlists?.items.find((item: any) => item.id === selected)
