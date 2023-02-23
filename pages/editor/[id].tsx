@@ -156,7 +156,9 @@ const EditorScreen = ({
         </>
       ) : (
         <div className="flex h-full w-full flex-col items-center justify-center overflow-hidden">
-          <div className="mb-8 text-4xl">This editing room doesn't exist!</div>
+          <div className="mb-8 text-4xl">
+            This editing room doesn&apos;t exist!
+          </div>
           <Button size="lg" variant={"default"}>
             <Link href="/dashboard" className="flex items-center">
               Select A Playlist To Edit <ArrowRight className="ml-2 h-4 w-4" />
