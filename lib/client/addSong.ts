@@ -13,7 +13,8 @@ export const addSong = async ({
   songs: songType[]
   setSongs: (songs: songType[]) => void
 }) => {
-  const res = await fetch(
+  setSongs([...songs, track])
+  await fetch(
     `/api/spotify/addItem?playlist=${playlist}&track=${
       "spotify:track:" + track.id
     }&accessToken=${accessToken}`,
@@ -21,7 +22,5 @@ export const addSong = async ({
       method: "POST",
     }
   )
-  const json = await res.json()
-  setSongs([...songs, track])
-  return json
+  console.log("added " + track.title)
 }

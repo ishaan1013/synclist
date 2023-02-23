@@ -60,15 +60,13 @@ const SongSearchCommand = ({
   }, [search])
 
   const handleSelect = async ({ song }: { song: songType }) => {
-    const addRes = await addSong({
+    await addSong({
       playlist: selected,
       track: song,
       accessToken,
       songs,
       setSongs,
     })
-    console.log("addRes:", addRes)
-    setOpen(false)
   }
 
   return (
@@ -92,7 +90,8 @@ const SongSearchCommand = ({
                     <Button
                       key={i}
                       onClick={() => {
-                        console.log(song)
+                        setOpen(false)
+
                         handleSelect({
                           song: {
                             id: song.id,
@@ -103,6 +102,7 @@ const SongSearchCommand = ({
                             songExt: song.external_urls.spotify,
                           },
                         })
+                        console.log("selected")
                       }}
                       variant="ghost"
                       className="h-auto w-full justify-start p-2">
