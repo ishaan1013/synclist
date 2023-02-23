@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils"
 import { useEffect } from "react"
 
 const Cursor = ({
@@ -68,8 +69,7 @@ const Cursor = ({
         </svg>
       )}
 
-      {message &&
-        messageMode &&
+      {((self && messageMode) || (!self && message)) &&
         !(
           y <= 0 ||
           x <= 0 ||
@@ -77,11 +77,33 @@ const Cursor = ({
           y >= window.innerHeight
         ) && (
           <div
-            className="absolute top-5 left-2 rounded-lg px-3 py-1"
+            className="absolute top-5 left-2 w-60 rounded-lg p-1"
+            onKeyUp={(e) => e.stopPropagation()}
             style={{ backgroundColor: color }}>
-            <p className="whitespace-nowrap text-sm font-medium leading-relaxed text-white">
-              {message}
-            </p>
+            {self ? (
+              <input
+                value={message}
+                autoFocus
+                onChange={(e) => {
+                  if (setMessage) setMessage(e.target.value)
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Escape" && setMessageMode) {
+                    setMessageMode(false)
+                  }
+                }}
+                maxLength={40}
+                placeholder="Type to chat..."
+                className={cn(
+                  "whitespace-nowrap rounded bg-transparent px-1 pb-[1px] text-sm leading-relaxed text-white/90 placeholder:text-white/40 focus:outline-none",
+                  cn("focus:ring-offset-", color)
+                )}
+              />
+            ) : (
+              <p className="max-w-[15rem] overflow-hidden text-ellipsis whitespace-nowrap text-sm leading-relaxed text-white">
+                {message}
+              </p>
+            )}
           </div>
         )}
     </div>

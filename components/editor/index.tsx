@@ -76,7 +76,7 @@ const Editor = ({
             }}
             className="text-base">
             Add Song
-            <div className="ml-1.5 flex items-center rounded-md border border-b-2 border-zinc-700 py-0.5 px-1 text-zinc-500">
+            <div className="ml-1.5 flex items-center rounded-md border border-b-[3px] border-zinc-700 py-0.5 px-1 text-zinc-500">
               <Command className="h-3 w-3" />
               <span className="translate-y-[1px] text-xs">K</span>
             </div>
@@ -88,7 +88,7 @@ const Editor = ({
             variant="subtle"
             className="text-base">
             Chat
-            <div className="ml-1.5 flex items-center rounded-md border border-b-2 border-zinc-300 py-0.5 px-1 text-zinc-500">
+            <div className="ml-1.5 flex items-center rounded-md border border-b-[3px] border-zinc-300 py-0.5 px-1 text-zinc-500">
               {messageMode ? (
                 <span className="translate-y-[1px] text-xs tracking-tighter">
                   ESC

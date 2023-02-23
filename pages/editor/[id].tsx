@@ -121,7 +121,8 @@ const EditorScreen = ({
                 x={cursor?.x}
                 // @ts-ignore
                 y={cursor?.y - editorScroll}
-                message={"test"}
+                message={message}
+                // message={"message"}
                 self
                 messageMode={messageMode}
                 setMessageMode={setMessageMode}

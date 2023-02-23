@@ -21,8 +21,8 @@ const Sidebar = ({
 
   const others = useStore((state) => state.liveblocks.others)
 
-  const [expanded, setExpanded] = useState(false)
-  const [expandedUI, setExpandedUI] = useState(false)
+  const [expanded, setExpanded] = useState(true)
+  const [expandedUI, setExpandedUI] = useState(true)
 
   useEffect(() => {
     if (expanded) {
