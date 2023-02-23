@@ -53,8 +53,14 @@ const EditorScreen = ({
     liveblocks: { enterRoom, leaveRoom },
   } = useStore()
   const others = useStore((state) => state.liveblocks.others)
+
   const cursor = useStore((state) => state.cursor)
+  const message = useStore((state) => state.message)
+  const messageMode = useStore((state) => state.messageMode)
+
   const setCursor = useStore((state) => state.setCursor)
+  const setMessage = useStore((state) => state.setMessage)
+  const setMessageMode = useStore((state) => state.setMessageMode)
 
   const router = useRouter()
   const roomId = router.asPath.split("/")[2]
@@ -99,7 +105,11 @@ const EditorScreen = ({
                     x={presence?.cursor?.x}
                     // @ts-ignore
                     y={presence?.cursor?.y - editorScroll}
-                    message={"test"}
+                    // @ts-ignore
+                    message={presence.message}
+                    // @ts-ignore
+                    messageMode={presence.messageMode}
+                    self={false}
                   />
                 )
               })}
@@ -113,6 +123,9 @@ const EditorScreen = ({
                 y={cursor?.y - editorScroll}
                 message={"test"}
                 self
+                messageMode={messageMode}
+                setMessageMode={setMessageMode}
+                setMessage={setMessage}
               />
               <AddSongDialog
                 open={songDialogOpen}

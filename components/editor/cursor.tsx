@@ -1,16 +1,51 @@
+import { useEffect } from "react"
+
 const Cursor = ({
   color,
   x,
   y,
-  message,
   self,
+  message,
+  setMessage,
+  messageMode,
+  setMessageMode,
 }: {
   color: string
   x: number
   y: number
-  message?: string
-  self?: boolean
+  self: boolean
+  message: string
+  setMessage?: (message: string) => void
+  messageMode: boolean
+  setMessageMode?: (messageMode: boolean) => void
 }) => {
+  useEffect(() => {
+    if (self && setMessage && setMessageMode) {
+      const handler = (e: KeyboardEvent) => {
+        if (e.key === "/") {
+          setMessageMode(true)
+        } else if (e.key === "Escape") {
+          setMessageMode(false)
+          setMessage("")
+        }
+      }
+      const ignore = (e: KeyboardEvent) => {
+        if (e.key === "/") {
+          console.log("/ pressed, preventDefualt")
+          e.preventDefault()
+        }
+      }
+
+      window.addEventListener("keyup", handler)
+      window.addEventListener("keydown", ignore)
+
+      return () => {
+        window.removeEventListener("keyup", handler)
+        window.removeEventListener("keydown", ignore)
+      }
+    }
+  }, [])
+
   return (
     <div
       className="pointer-events-none absolute top-0 left-0 z-[1000]"
@@ -34,6 +69,7 @@ const Cursor = ({
       )}
 
       {message &&
+        messageMode &&
         !(
           y <= 0 ||
           x <= 0 ||

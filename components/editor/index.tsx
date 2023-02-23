@@ -16,11 +16,14 @@ const Editor = ({
 }) => {
   const accessToken = useAccountStore((state) => state.accessToken)
   const selected = useStore((state) => state.selected)
-  const setSelected = useStore((state) => state.setSelected)
+  // const setSelected = useStore((state) => state.setSelected)
   const data = useAccountStore((state) => state.userData)
 
   const songs = useStore((state) => state.songs)
   const setSongs = useStore((state) => state.setSongs)
+
+  const messageMode = useStore((state) => state.messageMode)
+  const setMessageMode = useStore((state) => state.setMessageMode)
 
   const ref = useRef<HTMLDivElement>(null)
 
@@ -50,10 +53,8 @@ const Editor = ({
       })
     }
   }, [selected, accessToken])
-  // }, [selected, accessToken, songs])
 
   const onScroll = useCallback(() => {
-    const scrollY = window.scrollY
     if (ref?.current) {
       setEditorScroll(ref.current.scrollTop)
     }
@@ -63,19 +64,38 @@ const Editor = ({
     <div
       ref={ref}
       onScroll={onScroll}
-      className="dashboard-scroll flex h-full min-w-[650px] flex-grow flex-col items-start justify-start overflow-y-auto p-12">
+      className="dashboard-scroll flex h-full min-w-[700px] flex-grow flex-col items-start justify-start overflow-y-auto p-12">
       <div className="flex w-full items-center justify-between">
-        <div className="flex items-center space-x-6">
-          <div className="text-3xl font-medium">Playlist Editor</div>
+        <div className="flex items-center space-x-3 lg:space-x-6">
+          <div className="text-2xl font-medium lg:text-3xl">
+            Playlist Editor
+          </div>
           <Button
             onClick={() => {
               setOpen(true)
             }}
             className="text-base">
             Add Song
-            <div className="ml-2.5 flex items-center text-zinc-500">
-              <Command className="h-3.5 w-3.5" />
-              <span className="translate-y-[1px] text-sm">K</span>
+            <div className="ml-1.5 flex items-center rounded-md border border-b-2 border-zinc-700 py-0.5 px-1 text-zinc-500">
+              <Command className="h-3 w-3" />
+              <span className="translate-y-[1px] text-xs">K</span>
+            </div>
+          </Button>
+          <Button
+            onClick={() => {
+              setMessageMode(!messageMode)
+            }}
+            variant="subtle"
+            className="text-base">
+            Chat
+            <div className="ml-1.5 flex items-center rounded-md border border-b-2 border-zinc-300 py-0.5 px-1 text-zinc-500">
+              {messageMode ? (
+                <span className="translate-y-[1px] text-xs tracking-tighter">
+                  ESC
+                </span>
+              ) : (
+                <span className="translate-y-[1px] text-xs">/</span>
+              )}
             </div>
           </Button>
         </div>
