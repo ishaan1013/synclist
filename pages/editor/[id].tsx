@@ -17,7 +17,6 @@ import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 
 const COLORS = [
-  "#3b82f6",
   "#22c55e",
   "#ef4444",
   "#eab308",
@@ -47,6 +46,10 @@ const EditorScreen = ({
     liveblocks: { enterRoom, leaveRoom },
   } = useStore()
   const others = useStore((state) => state.liveblocks.others)
+<<<<<<< HEAD
+=======
+  const cursor = useStore((state) => state.cursor)
+>>>>>>> c084218f147755c1bee11d1a9eba3239cd8f8d18
   const setCursor = useStore((state) => state.setCursor)
 
   const router = useRouter()
@@ -76,6 +79,7 @@ const EditorScreen = ({
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+<<<<<<< HEAD
       {playlist ? (
         <>
           {session ? (
@@ -131,6 +135,43 @@ const EditorScreen = ({
           </Button>
         </div>
       )}
+=======
+      {others.map(({ connectionId, presence }) => {
+        if (presence.cursor === null || !presence.cursor) {
+          return null
+        }
+
+        return (
+          <Cursor
+            key={`cursor-${connectionId}`}
+            color={COLORS[connectionId % COLORS.length]}
+            // @ts-ignore
+            x={presence?.cursor?.x}
+            // @ts-ignore
+            y={presence?.cursor?.y - editorScroll}
+            message={"test"}
+          />
+        )
+      })}
+
+      <Cursor
+        key={`self`}
+        color="#3b82f6"
+        // @ts-ignore
+        x={cursor?.x}
+        // @ts-ignore
+        y={cursor?.y - editorScroll}
+        message={"test"}
+        self
+      />
+
+      <AddSongDialog open={songDialogOpen} setOpen={setSongDialogOpen} />
+
+      <div className="dashboard-scroll flex h-full overflow-x-auto">
+        <Sidebar editing selected={playlist} />
+        <Editor setEditorScroll={setEditorScroll} setOpen={setSongDialogOpen} />
+      </div>
+>>>>>>> c084218f147755c1bee11d1a9eba3239cd8f8d18
     </div>
   )
 }

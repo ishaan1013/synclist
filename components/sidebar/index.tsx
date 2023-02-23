@@ -4,6 +4,7 @@ import { Check, Copy, Loader, Loader2, LucideLogOut } from "lucide-react"
 import { signOut } from "next-auth/react"
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 
 const Sidebar = ({
@@ -49,6 +50,9 @@ const Sidebar = ({
     }
   }, [copiedUrl])
 
+  const router = useRouter()
+  const roomId = router.asPath.split("/")[2]
+
   return (
     <div className="flex w-60 min-w-[15rem] flex-col items-center justify-between bg-zinc-900 py-10 px-3">
       <div className="flex w-full flex-col">
@@ -84,7 +88,10 @@ const Sidebar = ({
               <div className="mt-2 h-0.5 w-full bg-zinc-800" />
               <div className="mt-4 flex w-full justify-between space-x-2">
                 <Button
-                  onClick={() => setCopiedId(true)}
+                  onClick={() => {
+                    navigator.clipboard.writeText(roomId)
+                    setCopiedId(true)
+                  }}
                   className="h-auto bg-zinc-800 py-1.5 px-3 text-sm hover:bg-zinc-700">
                   {copiedId ? (
                     <Check className="mr-1.5 h-3 w-3" />
@@ -94,7 +101,12 @@ const Sidebar = ({
                   Room ID
                 </Button>
                 <Button
-                  onClick={() => setCopiedUrl(true)}
+                  onClick={() => {
+                    navigator.clipboard.writeText(
+                      `https://synclist.ishaand.com/editor/${roomId}`
+                    )
+                    setCopiedUrl(true)
+                  }}
                   className="h-auto bg-zinc-800 py-1.5 px-3 text-sm hover:bg-zinc-700">
                   {copiedUrl ? (
                     <Check className="mr-1.5 h-3 w-3" />

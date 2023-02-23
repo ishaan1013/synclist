@@ -31,11 +31,11 @@ const SongSearchCommand = ({
       if (ctrlK(e)) e.preventDefault()
     }
 
-    window.addEventListener("keyup", handler)
+    window.addEventListener("keydown", handler)
     window.addEventListener("keydown", ignore)
     return () => {
-      window.addEventListener("keyup", handler)
-      window.addEventListener("keydown", ignore)
+      window.removeEventListener("keydown", handler)
+      window.removeEventListener("keydown", ignore)
     }
   }, [])
 
@@ -60,14 +60,13 @@ const SongSearchCommand = ({
   }, [search])
 
   const handleSelect = async ({ song }: { song: songType }) => {
-    const addRes = await addSong({
+    await addSong({
       playlist: selected,
       track: song,
       accessToken,
       songs,
       setSongs,
     })
-    setOpen(false)
   }
 
   return (
@@ -91,7 +90,8 @@ const SongSearchCommand = ({
                     <Button
                       key={i}
                       onClick={() => {
-                        song
+                        setOpen(false)
+
                         handleSelect({
                           song: {
                             id: song.id,
@@ -102,6 +102,7 @@ const SongSearchCommand = ({
                             songExt: song.external_urls.spotify,
                           },
                         })
+                        console.log("selected")
                       }}
                       variant="ghost"
                       className="h-auto w-full justify-start p-2">

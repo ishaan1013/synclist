@@ -17,6 +17,8 @@ type T = {
   setSongs: (songs: songType[]) => void
   selected: string
   setSelected: (selected: string) => void
+  roomId: string
+  setRoomId: (roomId: string) => void
   cursor: Cursor
   setCursor: (cursor: Cursor) => void
 }
@@ -30,6 +32,8 @@ export const useStore = create<WithLiveblocks<T>>()(
       setSongs: (songs) => set({ songs }),
       selected: "",
       setSelected: (selected) => set({ selected }),
+      roomId: "",
+      setRoomId: (roomId) => set({ roomId }),
       cursor: { x: 0, y: 0 },
       setCursor: (cursor) => set({ cursor }),
     }),
