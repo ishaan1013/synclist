@@ -31,11 +31,11 @@ const SongSearchCommand = ({
       if (ctrlK(e)) e.preventDefault()
     }
 
-    window.addEventListener("keyup", handler)
+    window.addEventListener("keydown", handler)
     window.addEventListener("keydown", ignore)
     return () => {
-      window.addEventListener("keyup", handler)
-      window.addEventListener("keydown", ignore)
+      window.removeEventListener("keydown", handler)
+      window.removeEventListener("keydown", ignore)
     }
   }, [])
 

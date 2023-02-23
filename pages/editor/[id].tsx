@@ -14,7 +14,6 @@ import AddSongDialog from "@/components/editor/songSearchCommand"
 import { useRouter } from "next/router"
 
 const COLORS = [
-  "#3b82f6",
   "#22c55e",
   "#ef4444",
   "#eab308",
@@ -44,7 +43,7 @@ const EditorScreen = ({
     liveblocks: { enterRoom, leaveRoom },
   } = useStore()
   const others = useStore((state) => state.liveblocks.others)
-  // const cursor = useStore((state) => state.cursor)
+  const cursor = useStore((state) => state.cursor)
   const setCursor = useStore((state) => state.setCursor)
   // const othersCursors = others.map((user) => user.presence.cursor)
 
@@ -86,9 +85,21 @@ const EditorScreen = ({
             x={presence?.cursor?.x}
             // @ts-ignore
             y={presence?.cursor?.y - editorScroll}
+            message={"test"}
           />
         )
       })}
+
+      <Cursor
+        key={`self`}
+        color="#3b82f6"
+        // @ts-ignore
+        x={cursor?.x}
+        // @ts-ignore
+        y={cursor?.y - editorScroll}
+        message={"test"}
+        self
+      />
 
       <AddSongDialog open={songDialogOpen} setOpen={setSongDialogOpen} />
 
