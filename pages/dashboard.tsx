@@ -29,7 +29,6 @@ const Dashboard = ({
       name: data?.name,
       image: data?.image,
     }
-    console.log("🚀 ~ file: dashboard.tsx:39 ~ getUserId ~ userData:", userData)
     setUserData(userData)
   }, [])
 
