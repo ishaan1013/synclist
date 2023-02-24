@@ -25,6 +25,8 @@ type T = {
   setMessage: (message: string) => void
   messageMode: boolean
   setMessageMode: (messageMode: boolean) => void
+  expanded: boolean
+  setExpanded: (expanded: boolean) => void
 }
 
 export const useStore = create<WithLiveblocks<T>>()(
@@ -44,6 +46,8 @@ export const useStore = create<WithLiveblocks<T>>()(
       setMessage: (message) => set({ message }),
       messageMode: false,
       setMessageMode: (messageMode) => set({ messageMode }),
+      expanded: true,
+      setExpanded: (expanded) => set({ expanded }),
     }),
     {
       client,
