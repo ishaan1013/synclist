@@ -11,6 +11,8 @@ import {
 import { GripVertical, Mic2, MoreVertical, Music, Trash2 } from "lucide-react"
 import { circular } from "@/pages/_app"
 import songType from "@/lib/songType"
+import { deleteSong } from "@/lib/client/deleteSong"
+import { useAccountStore, useStore } from "@/lib/state"
 
 const Song = forwardRef(
   (
@@ -22,6 +24,21 @@ const Song = forwardRef(
     }: { song: songType; id: string; attributes?: any; listeners?: any },
     ref: ForwardedRef<HTMLDivElement>
   ) => {
+    const accessToken = useAccountStore((state) => state.accessToken)
+    const selected = useStore((state) => state.selected)
+    const songs = useStore((state) => state.songs)
+    const setSongs = useStore((state) => state.setSongs)
+
+    const handleSelect = async ({ song }: { song: songType }) => {
+      await deleteSong({
+        playlist: selected,
+        track: song,
+        accessToken,
+        songs,
+        setSongs,
+      })
+    }
+
     return (
       <div
         ref={ref}
@@ -60,13 +77,21 @@ const Song = forwardRef(
             </div>
           </div>
         </div>
-        <SongOptionsDropdown />
+        {song ? (
+          <SongOptionsDropdown handleSelect={handleSelect} song={song} />
+        ) : null}
       </div>
     )
   }
 )
 
-export const SongOptionsDropdown = () => {
+export const SongOptionsDropdown = ({
+  song,
+  handleSelect,
+}: {
+  song: songType
+  handleSelect: ({ song }: { song: songType }) => void
+}) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -77,18 +102,32 @@ export const SongOptionsDropdown = () => {
       <DropdownMenuContent>
         <DropdownMenuGroup>
           <DropdownMenuItem>
-            <Music className="mr-2 h-4 w-4" />
-            <span className={circular.variable}>
-              <span className="circular font-normal">See Song</span>
-            </span>
+            <a
+              href={song.songExt}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center">
+              <Music className="mr-2 h-4 w-4" />
+              <span className={circular.variable}>
+                <span className="circular font-normal">See Song</span>
+              </span>
+            </a>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <Mic2 className="mr-2 h-4 w-4" />
-            <span className={circular.variable}>
-              <span className="circular font-normal">See Artist</span>
-            </span>
+            <a
+              href={song.artistExt}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center">
+              <Mic2 className="mr-2 h-4 w-4" />
+              <span className={circular.variable}>
+                <span className="circular font-normal">See Artist</span>
+              </span>
+            </a>
           </DropdownMenuItem>
-          <DropdownMenuItem className="font-medium text-red-500">
+          <DropdownMenuItem
+            onClick={() => handleSelect({ song })}
+            className="font-medium text-red-500">
             <Trash2 className="mr-2 h-4 w-4" />
             <span className={circular.variable}>
               <span className="circular pr-1 font-normal">

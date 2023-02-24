@@ -1,17 +1,24 @@
 import songType from "../songType"
 
-export const deleteSong = async (
-  playlist: string,
-  trackId: string,
-  accessToken: string,
-  songs: songType[],
+export const deleteSong = async ({
+  playlist,
+  track,
+  accessToken,
+  songs,
+  setSongs,
+}: {
+  playlist: string
+  track: songType
+  accessToken: string
+  songs: songType[]
   setSongs: (songs: songType[]) => void
-) => {
-  const res = await fetch(
-    `/api/spotify/deleteItem?playlist=${playlist}&track=${trackId}&accessToken=${accessToken}`
-  )
-  const json = await res.json()
-  const newSongs = songs.filter((song) => song.id !== trackId)
+}) => {
+  const newSongs = songs.filter((song) => song.id !== track.id)
   setSongs(newSongs)
-  return json
+  await fetch(
+    `/api/spotify/deleteItem?playlist=${playlist}&track=${track.id}&accessToken=${accessToken}`,
+    {
+      method: "POST",
+    }
+  )
 }
