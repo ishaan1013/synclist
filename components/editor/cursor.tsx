@@ -32,7 +32,6 @@ const Cursor = ({
       }
       const ignore = (e: KeyboardEvent) => {
         if (e.key === "/") {
-          console.log("/ pressed, preventDefualt")
           e.preventDefault()
         }
       }

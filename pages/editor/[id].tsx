@@ -62,6 +62,8 @@ const EditorScreen = ({
   const setMessage = useStore((state) => state.setMessage)
   const setMessageMode = useStore((state) => state.setMessageMode)
 
+  const expanded = useStore((state) => state.expanded)
+
   const router = useRouter()
   const roomId = router.asPath.split("/")[2]
 
@@ -81,7 +83,10 @@ const EditorScreen = ({
     <div
       className="h-screen w-screen overflow-hidden"
       onPointerMove={(e) =>
-        setCursor({ x: e.clientX, y: e.clientY + editorScroll })
+        setCursor({
+          x: e.clientX + (expanded ? 0 : 152),
+          y: e.clientY + editorScroll,
+        })
       }>
       <Head>
         <title>SyncList</title>
@@ -102,7 +107,7 @@ const EditorScreen = ({
                     key={`cursor-${connectionId}`}
                     color={COLORS[connectionId % COLORS.length]}
                     // @ts-ignore
-                    x={presence?.cursor?.x}
+                    x={presence?.cursor?.x - (expanded ? 0 : 152)}
                     // @ts-ignore
                     y={presence?.cursor?.y - editorScroll}
                     // @ts-ignore
@@ -147,7 +152,7 @@ const EditorScreen = ({
                 Log in to start editing playlists!
               </div>
               <Button size="lg" variant={"default"}>
-                <Link href="/" className="flex items-center">
+                <Link href="/" tabIndex={-1} className="flex items-center">
                   Take Me There <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
@@ -160,7 +165,7 @@ const EditorScreen = ({
             This editing room doesn&apos;t exist!
           </div>
           <Button size="lg" variant={"default"}>
-            <Link href="/dashboard" className="flex items-center">
+            <Link href="/dashboard" tabIndex={-1} className="flex items-center">
               Select A Playlist To Edit <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>

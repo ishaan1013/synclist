@@ -76,7 +76,7 @@ const Editor = ({
             }}
             className="text-base">
             Add Song
-            <div className="ml-1.5 flex items-center rounded-md border border-b-[3px] border-zinc-700 py-0.5 px-1 text-zinc-500">
+            <div className="ml-1.5 flex items-center rounded-md border border-b-[3px] border-zinc-600 py-0.5 px-1 text-zinc-500">
               <Command className="h-3 w-3" />
               <span className="translate-y-[1px] text-xs">K</span>
             </div>

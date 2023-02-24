@@ -121,6 +121,7 @@ export const PlaylistSelect = () => {
                 href="https://liveblocks.io"
                 target="_blank"
                 rel="noreferrer"
+                tabIndex={-1}
                 className="flex">
                 <span className="mr-1.5">Built with</span>{" "}
                 <div className="translate-y-[1px] ">

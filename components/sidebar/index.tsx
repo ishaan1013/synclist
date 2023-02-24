@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { useAccountStore, useStore } from "@/lib/state"
 import { cn } from "@/lib/utils"
-import { Check, ChevronLeft, Copy, Loader2 } from "lucide-react"
+import { Check, ChevronLeft, Copy, Loader2, LucideLogOut } from "lucide-react"
 import { signOut } from "next-auth/react"
 import Image from "next/image"
 import Link from "next/link"
@@ -21,7 +21,9 @@ const Sidebar = ({
 
   const others = useStore((state) => state.liveblocks.others)
 
-  const [expanded, setExpanded] = useState(true)
+  const expanded = useStore((state) => state.expanded)
+  const setExpanded = useStore((state) => state.setExpanded)
+
   const [expandedUI, setExpandedUI] = useState(true)
 
   useEffect(() => {
@@ -76,7 +78,7 @@ const Sidebar = ({
       <Button
         variant="subtle"
         size="sm"
-        onClick={() => setExpanded((prev) => !prev)}
+        onClick={() => setExpanded(!expanded)}
         className={cn(
           expanded ? "rotate-0" : "rotate-180",
           "absolute right-0 top-1/2 h-6 w-6 translate-x-1/2 -translate-y-1/2 rounded-full border border-zinc-200 p-1 text-xs shadow-[0_0px_20px_2px] shadow-zinc-900/50 duration-100"
@@ -89,10 +91,11 @@ const Sidebar = ({
           disabled={Boolean(selected) && !editing}
           className={cn(
             !expandedUI && "max-w-[4rem]",
-            "group relative m-0 h-16 w-full rounded-lg bg-transparent p-2 text-left hover:bg-zinc-800"
+            "relative m-0 h-16 w-full rounded-lg bg-transparent p-2 text-left hover:bg-zinc-800"
           )}>
           <Link
             href="/dashboard"
+            tabIndex={-1}
             className="flex h-full w-full items-center justify-start">
             <div className="relative z-0 aspect-square h-12 overflow-hidden rounded-md bg-zinc-600 bg-cover duration-100">
               {image ? (
@@ -184,13 +187,13 @@ const Sidebar = ({
           !expandedUI && "max-w-[4rem]",
           "group relative m-0 flex h-16 w-full items-center justify-start rounded-lg bg-transparent p-2 text-left hover:bg-zinc-800"
         )}>
-        {/* <div className="group-hover:opcity-100 absolute left-5 z-10 -translate-y-2 opacity-0 duration-100 group-hover:translate-y-0">
-          <LucideLogOut className="h-7 w-7 text-white" />
-        </div> */}
-        <div className="relative z-0 aspect-square h-12 overflow-hidden rounded-md bg-zinc-600 bg-cover duration-100">
+        <div className="relative z-0 flex aspect-square h-12 items-center justify-center overflow-hidden rounded-md bg-zinc-600 bg-cover duration-100">
+          <div className="absolute z-10 opacity-0 duration-200 group-hover:opacity-100">
+            <LucideLogOut className="h-7 w-7 text-white" />
+          </div>
           {data?.image ? (
             <Image
-              className="min-h-full min-w-full object-cover"
+              className="z-0 min-h-full min-w-full object-cover duration-200 group-hover:opacity-50 group-hover:brightness-50"
               src={data?.image ?? ""}
               alt=""
               sizes="128px"
