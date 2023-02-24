@@ -16,7 +16,9 @@ export const deleteSong = async ({
   const newSongs = songs.filter((song) => song.id !== track.id)
   setSongs(newSongs)
   await fetch(
-    `/api/spotify/deleteItem?playlist=${playlist}&track=${track.id}&accessToken=${accessToken}`,
+    `/api/spotify/deleteItem?playlist=${playlist}&track=${
+      "spotify:track:" + track.id
+    }&accessToken=${accessToken}`,
     {
       method: "POST",
     }

@@ -11,7 +11,11 @@ export default async function handler(
       {
         method: "DELETE",
         body: JSON.stringify({
-          tracks: [track],
+          tracks: [
+            {
+              uri: track,
+            },
+          ],
         }),
         headers: {
           Authorization: `Bearer ${accessToken}`,

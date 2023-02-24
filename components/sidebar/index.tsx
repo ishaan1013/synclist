@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { useAccountStore, useStore } from "@/lib/state"
 import { cn } from "@/lib/utils"
-import { Check, ChevronLeft, Copy, Loader2, LucideLogOut } from "lucide-react"
+import { Check, ChevronLeft, Copy, Loader2, LogOut } from "lucide-react"
 import { signOut } from "next-auth/react"
 import Image from "next/image"
 import Link from "next/link"
@@ -189,7 +189,7 @@ const Sidebar = ({
         )}>
         <div className="relative z-0 flex aspect-square h-12 items-center justify-center overflow-hidden rounded-md bg-zinc-600 bg-cover duration-100">
           <div className="absolute z-10 opacity-0 duration-200 group-hover:opacity-100">
-            <LucideLogOut className="h-7 w-7 text-white" />
+            <LogOut className="h-7 w-7 text-white" />
           </div>
           {data?.image ? (
             <Image

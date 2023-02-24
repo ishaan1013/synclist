@@ -76,7 +76,7 @@ const Cursor = ({
           y >= window.innerHeight
         ) && (
           <div
-            className="absolute top-5 left-2 w-60 rounded-lg p-1"
+            className="absolute top-5 left-2 rounded-lg p-1"
             onKeyUp={(e) => e.stopPropagation()}
             style={{ backgroundColor: color }}>
             {self ? (
@@ -94,12 +94,12 @@ const Cursor = ({
                 maxLength={40}
                 placeholder="Type to chat..."
                 className={cn(
-                  "whitespace-nowrap rounded bg-transparent px-1 pb-[1px] text-sm leading-relaxed text-white/90 placeholder:text-white/40 focus:outline-none",
+                  "w-[14.5rem] whitespace-nowrap rounded bg-transparent px-1 pb-[1px] text-sm leading-relaxed text-white/90 placeholder:text-white/40 focus:outline-none",
                   cn("focus:ring-offset-", color)
                 )}
               />
             ) : (
-              <p className="max-w-[15rem] overflow-hidden text-ellipsis whitespace-nowrap text-sm leading-relaxed text-white">
+              <p className="max-w-[14.5rem] overflow-hidden text-ellipsis whitespace-nowrap px-1 text-sm leading-relaxed text-white">
                 {message}
               </p>
             )}
