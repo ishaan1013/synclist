@@ -108,6 +108,8 @@ const Editor = ({
                 // @ts-ignore
                 name={presence?.presence?.userData?.name}
                 // @ts-ignore
+                key={presence?.presence?.userData?.id}
+                // @ts-ignore
                 src={presence?.presence?.userData?.image}
                 clr="zinc"
               />
