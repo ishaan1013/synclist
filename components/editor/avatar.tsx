@@ -4,7 +4,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { cn } from "@/lib/utils"
 import Image from "next/image"
 
 const Avatar = ({
@@ -12,29 +11,38 @@ const Avatar = ({
   src,
   name,
 }: {
-  clr: "blue" | "green" | "red" | "yellow" | "orange" | "purple" | "zinc"
+  clr:
+    | "zinc"
+    | "#22c55e"
+    | "#ef4444"
+    | "#eab308"
+    | "#f97316"
+    | "#a855f7"
+    | "#ec4899"
   src: string | null | undefined
   name: string
 }) => {
-  const ring = {
-    zinc: "ring-zinc-500",
-    blue: "ring-blue-500",
-    green: "ring-green-500",
-    red: "ring-red-500",
-    yellow: "ring-yellow-500",
-    orange: "ring-orange-500",
-    purple: "ring-purple-500",
-    pink: "ring-pink-500",
+  const avatarCn = {
+    zinc: "relative h-10 w-10 overflow-hidden rounded-full bg-zinc-600  outline-none ring-2 ring-offset-2 ring-zinc-500",
+    "#22c55e":
+      "relative h-10 w-10 overflow-hidden rounded-full bg-zinc-600 outline-none ring-2 ring-offset-2 ring[#22c55e]",
+    "#ef4444":
+      "relative h-10 w-10 overflow-hidden rounded-full bg-zinc-600 outline-none ring-2 ring-offset-2 ring-[#ef4444]",
+    "#eab308":
+      "relative h-10 w-10 overflow-hidden rounded-full bg-zinc-600 outline-none ring-2 ring-offset-2 ring-[#eab308]",
+    "#f97316":
+      "relative h-10 w-10 overflow-hidden rounded-full bg-zinc-600 outline-none ring-2 ring-offset-2 ring-[#f97316]",
+    "#a855f7":
+      "relative h-10 w-10 overflow-hidden rounded-full bg-zinc-600 outline-none ring-2 ring-offset-2 ring-[#a855f7]",
+    "#ec4899":
+      "relative h-10 w-10 overflow-hidden rounded-full bg-zinc-600 outline-none ring-2 ring-offset-2 ring-[#ec4899]",
   }
-  const avatarCn = cn(
-    "relative h-10 w-10 overflow-hidden rounded-full bg-zinc-600 outline-none ring-2 ring-offset-2",
-    ring[clr]
-  )
+
   return (
     <TooltipProvider delayDuration={200}>
       <Tooltip>
         <TooltipTrigger className="rounded-full">
-          <div className={avatarCn}>
+          <div className={avatarCn[clr]}>
             {src ? (
               <Image
                 className="min-h-full min-w-full object-cover"
@@ -45,6 +53,7 @@ const Avatar = ({
               />
             ) : null}
           </div>
+          {/* {parseInt(clr) % COLORS.length} */}
         </TooltipTrigger>
         <TooltipContent side="bottom">
           <p className="select-none">{name}</p>

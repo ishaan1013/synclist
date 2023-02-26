@@ -6,6 +6,7 @@ import List from "./list"
 import Avatar from "./avatar"
 import LinkPopover from "./linkPopover"
 import songType from "@/lib/songType"
+import COLORS from "@/lib/colors"
 
 const Editor = ({
   setEditorScroll,
@@ -103,15 +104,15 @@ const Editor = ({
         <div className="flex items-center space-x-4">
           <div className="flex items-center space-x-3">
             <Avatar name="Ishaan" src={data?.image} clr="zinc" />
-            {others.map((presence) => (
+            {others.map(({ connectionId, presence }) => (
               <Avatar
                 // @ts-ignore
-                name={presence?.presence?.userData?.name}
+                name={presence?.userData?.name}
                 // @ts-ignore
-                key={presence?.presence?.userData?.id}
+                key={presence?.userData?.id}
                 // @ts-ignore
-                src={presence?.presence?.userData?.image}
-                clr="zinc"
+                src={presence?.userData?.image}
+                clr={COLORS[connectionId % COLORS.length]}
               />
             ))}
           </div>

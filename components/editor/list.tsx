@@ -94,7 +94,7 @@ const List = ({
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}>
         {/* {playlist} */}
-        {accessToken}
+        {/* {accessToken} */}
         <div className="mt-8 flex w-full max-w-screen-xs flex-col space-y-2 2xl:max-w-screen-sm">
           {songs ? (
             <SortableContext

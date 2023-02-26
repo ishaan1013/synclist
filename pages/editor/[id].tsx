@@ -114,19 +114,21 @@ const EditorScreen = ({
                   return null
                 }
                 return (
-                  <Cursor
-                    key={`cursor-${connectionId}`}
-                    color={COLORS[connectionId % COLORS.length]}
-                    // @ts-ignore
-                    x={presence?.cursor?.x - (expanded ? 0 : 152)}
-                    // @ts-ignore
-                    y={presence?.cursor?.y - editorScroll}
-                    // @ts-ignore
-                    message={presence.message}
-                    // @ts-ignore
-                    messageMode={presence.messageMode}
-                    self={false}
-                  />
+                  <>
+                    <Cursor
+                      key={`cursor-${connectionId}`}
+                      color={COLORS[connectionId % COLORS.length]}
+                      // @ts-ignore
+                      x={presence?.cursor?.x - (expanded ? 0 : 152)}
+                      // @ts-ignore
+                      y={presence?.cursor?.y - editorScroll}
+                      // @ts-ignore
+                      message={presence.message}
+                      // @ts-ignore
+                      messageMode={presence.messageMode}
+                      self={false}
+                    />
+                  </>
                 )
               })}
 
