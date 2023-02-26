@@ -25,12 +25,12 @@ const Landing = () => {
       <div className="my-24 flex w-full max-w-screen-lg flex-col items-center">
         <div className="relative">
           <DisplayCursor
-            pos="md:top-5 top-3 md:left-36 sm:left-24 left-8"
+            pos="md:top-5 top-3 md:left-36 sm:left-32 left-28"
             color="#2447e3"
             message="Hey 👋"
           />
           <DisplayCursor
-            pos="md:top-10 top-8 md:right-48 sm:right-32 right-8"
+            pos="md:top-10 top-8 md:right-48 sm:right-44 right-40"
             color="#ef4444"
             message="Hello 🙋‍♂️"
           />
@@ -126,7 +126,7 @@ const DisplayCursor = ({
   return (
     <div
       className={cn(
-        "pointer-events-none absolute z-[1000] animate-bounce",
+        "pointer-events-none absolute z-[1000] hidden animate-bounce md:block",
         pos
       )}>
       <svg
