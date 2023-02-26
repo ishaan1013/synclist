@@ -68,7 +68,7 @@ const LoginDialog = ({
         <DialogHeader>
           <DialogTitle>Want to try SyncList?</DialogTitle>
           <DialogDescription>
-            Spotify doesn't allow public OAuth access, so all app users need to
+            Spotify doesn&apos;t allow public OAuth access, so all app users need to
             be entered manually. DM me on Twitter/Linkedin so I can give you
             access 😁
           </DialogDescription>
