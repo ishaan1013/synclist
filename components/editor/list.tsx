@@ -13,13 +13,14 @@ import {
   SortableContext,
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
-  useSortable,
 } from "@dnd-kit/sortable"
 
 import Song from "./song"
 import SortableSong from "./sortableSong"
 import songType from "@/lib/songType"
 import { Loader2 } from "lucide-react"
+import { moveSong } from "@/lib/client/moveSong"
+import { useStore } from "@/lib/state"
 
 const List = ({
   songs,
@@ -36,6 +37,10 @@ const List = ({
       coordinateGetter: sortableKeyboardCoordinates,
     })
   )
+
+  const accessToken = useStore((state) => state.accessToken)
+  const playlist = useStore((state) => state.selected)
+
   const handleDragEnd = (event: any) => {
     const { active, over } = event
 
@@ -49,6 +54,7 @@ const List = ({
         )
 
         if (newIndex !== -1) {
+          moveSong({ accessToken, start: oldIndex, insert: newIndex, playlist })
           return arrayMove(songs, oldIndex, newIndex)
         } else {
           return songs
@@ -82,6 +88,8 @@ const List = ({
         collisionDetection={closestCenter}
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}>
+        {/* {playlist} */}
+        {accessToken}
         <div className="mt-8 flex w-full max-w-screen-xs flex-col space-y-2 2xl:max-w-screen-sm">
           {songs ? (
             <SortableContext

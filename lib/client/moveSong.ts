@@ -1,11 +1,21 @@
-export const moveSong = async (
-  playlist: string,
-  accessToken: string,
-  start: number,
+export const moveSong = async ({
+  playlist,
+  accessToken,
+  start,
+  insert,
+}: {
+  playlist: string
+  accessToken: string
+  start: number
   insert: number
-) => {
-  const res = await fetch(
-    `/api/spotify/updateItems?playlist=${playlist}&start=${start}&insert=${insert}&accessToken=${accessToken}`
+}) => {
+  console.log("start", start)
+  console.log("insert", insert)
+  const res1 = await fetch(
+    `/api/spotify/moveItem?playlist=${playlist}&start=${start}&insert=${
+      insert > start ? insert + 1 : insert
+    }&accessToken=${accessToken}`
   )
-  return await res.json()
+  const data1 = await res1.json()
+  console.log("data1", data1)
 }
