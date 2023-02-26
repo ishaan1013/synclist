@@ -1,39 +1,36 @@
+import { useEffect, useState } from "react"
+import { useRouter } from "next/router"
+import Link from "next/link"
 import { GetServerSideProps, InferGetServerSidePropsType } from "next"
+import Head from "next/head"
+
 import { getServerSession } from "next-auth"
 import { authOptions } from "../api/auth/[...nextauth]"
-import { useEffect, useState } from "react"
-import Head from "next/head"
 import { useSession } from "next-auth/react"
 import { prisma } from "@/lib/prisma"
 import { UDataType, useStore } from "@/lib/state"
+import COLORS from "@/lib/colors"
 
 import Sidebar from "@/components/sidebar"
 import Editor from "@/components/editor"
 import Cursor from "@/components/editor/cursor"
 import AddSongDialog from "@/components/editor/songSearchCommand"
-import { useRouter } from "next/router"
 import { Button } from "@/components/ui/button"
-import Link from "next/link"
 import { ArrowRight } from "lucide-react"
-
-const COLORS = [
-  "#22c55e",
-  "#ef4444",
-  "#eab308",
-  "#f97316",
-  "#a855f7",
-  "#ec4899",
-]
+import { getPlaylists } from "@/lib/client/getPlaylists"
 
 const EditorScreen = ({
   user,
   playlist,
+  expiry,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const { data: session } = useSession()
   const data = session?.user
 
-  const setUserData = useStore((state) => state.setUserData)
+  const accessToken = useStore((state) => state.accessToken)
+  const setPlaylists = useStore((state) => state.setPlaylists)
   const setAccessToken = useStore((state) => state.setAccessToken)
+  const setUserData = useStore((state) => state.setUserData)
   const setSelected = useStore((state) => state.setSelected)
 
   useEffect(() => {
@@ -64,11 +61,14 @@ const EditorScreen = ({
 
   const expanded = useStore((state) => state.expanded)
 
+  const [editorScroll, setEditorScroll] = useState(0)
+  const [songDialogOpen, setSongDialogOpen] = useState(false)
+
   const router = useRouter()
   const roomId = router.asPath.split("/")[2]
 
   useEffect(() => {
-    if (playlist) {
+    if (playlist && !expired) {
       enterRoom(roomId)
       return () => {
         leaveRoom(roomId)
@@ -76,8 +76,15 @@ const EditorScreen = ({
     }
   }, [enterRoom, leaveRoom])
 
-  const [editorScroll, setEditorScroll] = useState(0)
-  const [songDialogOpen, setSongDialogOpen] = useState(false)
+  const expired = expiry < Date.now()
+
+  useEffect(() => {
+    if (accessToken) {
+      getPlaylists({ accessToken }).then((res) => {
+        setPlaylists(res.playlists)
+      })
+    }
+  }, [accessToken])
 
   return (
     <div
@@ -94,7 +101,7 @@ const EditorScreen = ({
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {playlist ? (
+      {playlist && !expired ? (
         <>
           {session ? (
             <>
@@ -162,7 +169,9 @@ const EditorScreen = ({
       ) : (
         <div className="flex h-full w-full flex-col items-center justify-center overflow-hidden">
           <div className="mb-8 text-4xl">
-            This editing room doesn&apos;t exist!
+            {expired
+              ? `This editing room expired. Create a new one to keep going!`
+              : "This editing room doesn&apos;t exist!"}
           </div>
           <Button size="lg" variant={"default"}>
             <Link href="/dashboard" tabIndex={-1} className="flex items-center">
@@ -206,14 +215,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     room
   )
   const playlist = room ? room.playlist : ""
-
-  console.log(user)
+  const expiry = room ? room.createdAt.getTime() + 86400000 : undefined
 
   return {
     props: {
       session,
       user,
       playlist,
+      expiry,
     },
   }
 }

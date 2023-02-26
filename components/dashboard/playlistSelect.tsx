@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button"
+import { getPlaylists } from "@/lib/client/getPlaylists"
 import { useStore } from "@/lib/state"
 import { FolderPlus, Loader2 } from "lucide-react"
 import Image from "next/image"
@@ -14,16 +15,8 @@ export const PlaylistSelect = () => {
   const setSelected = useStore((state) => state.setSelected)
 
   useEffect(() => {
-    const getPlaylists = async () => {
-      const res = await fetch(
-        "/api/spotify/getPlaylists?accessToken=" + accessToken
-      )
-      return await res.json()
-    }
-    // console.log("use access token", accessToken)
-
     if (accessToken) {
-      getPlaylists().then((res) => {
+      getPlaylists({ accessToken }).then((res) => {
         setPlaylists(res.playlists)
       })
     }
