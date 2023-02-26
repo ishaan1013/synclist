@@ -126,7 +126,7 @@ const DisplayCursor = ({
   return (
     <div
       className={cn(
-        "pointer-events-none absolute z-[1000] animate-bounce",
+        "pointer-events-none absolute z-[1000] animate-bounce hidden md:block",
         pos
       )}>
       <svg
