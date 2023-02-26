@@ -3,6 +3,7 @@ import type { AppProps } from "next/app"
 import localFont from "@next/font/local"
 import { SessionProvider } from "next-auth/react"
 import { Toaster } from "@/components/ui/toast"
+import { GoogleAnalytics } from "nextjs-google-analytics"
 
 export const circular = localFont({
   variable: "--circular-font",
@@ -67,6 +68,8 @@ export default function App({
   return (
     <SessionProvider session={session}>
       <div className={circular.className}>
+        <GoogleAnalytics trackPageViews />
+
         <Component {...pageProps} />
         <Toaster />
       </div>
