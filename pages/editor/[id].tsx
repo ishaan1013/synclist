@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
-import Link from "next/link"
 import { GetServerSideProps, InferGetServerSidePropsType } from "next"
 import Head from "next/head"
 
@@ -12,11 +11,9 @@ import { UDataType, useStore } from "@/lib/state"
 import COLORS from "@/lib/colors"
 
 import Sidebar from "@/components/sidebar"
-import Editor from "@/components/editor"
+import Editor, { NoAuth, NoRoom } from "@/components/editor"
 import Cursor from "@/components/editor/cursor"
 import AddSongDialog from "@/components/editor/songSearchCommand"
-import { Button } from "@/components/ui/button"
-import { ArrowRight } from "lucide-react"
 import { getPlaylists } from "@/lib/client/getPlaylists"
 
 const EditorScreen = ({
@@ -160,31 +157,11 @@ const EditorScreen = ({
               </div>
             </>
           ) : (
-            <div className="flex h-full w-full flex-col items-center justify-center overflow-hidden">
-              <div className="mb-8 text-4xl">
-                Log in to start editing playlists!
-              </div>
-              <Button size="lg" variant={"default"}>
-                <Link href="/" tabIndex={-1} className="flex items-center">
-                  Take Me There <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-            </div>
+            <NoAuth />
           )}
         </>
       ) : (
-        <div className="flex h-full w-full flex-col items-center justify-center overflow-hidden">
-          <div className="mb-8 text-4xl">
-            {expired
-              ? `This editing room expired. Create a new one to keep going!`
-              : "This editing room doesn&apos;t exist!"}
-          </div>
-          <Button size="lg" variant={"default"}>
-            <Link href="/dashboard" tabIndex={-1} className="flex items-center">
-              Select A Playlist To Edit <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
-        </div>
+        <NoRoom expired={expired} />
       )}
     </div>
   )
@@ -216,10 +193,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       id: typeof context.params?.id === "string" ? context.params.id : "",
     },
   })
-  console.log(
-    "🚀 ~ file: [id].tsx:131 ~ constgetServerSideProps:GetServerSideProps= ~ room:",
-    room
-  )
   const playlist = room ? room.playlist : ""
   const owner = room ? room.owner : ""
   const expiry = room ? room.createdAt.getTime() + 3600000 : undefined

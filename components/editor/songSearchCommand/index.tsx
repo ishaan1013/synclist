@@ -102,7 +102,6 @@ const SongSearchCommand = ({
                             songExt: song.external_urls.spotify,
                           },
                         })
-                        console.log("selected")
                       }}
                       variant="ghost"
                       className="h-auto w-full justify-start p-2">

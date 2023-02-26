@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { useStore } from "@/lib/state"
-import { Command, Music } from "lucide-react"
-import { Dispatch, useCallback, useEffect, useRef, useState } from "react"
+import { Command } from "lucide-react"
+import { Dispatch, useCallback, useEffect, useRef } from "react"
 import List from "./list"
 import Avatar from "./avatar"
 import LinkPopover from "./linkPopover"
@@ -130,3 +130,5 @@ const Editor = ({
 }
 
 export default Editor
+
+export * from "./redirects"

@@ -26,18 +26,14 @@ export const authOptions = {
 
   callbacks: {
     async session({ session, user }: { session: Session; user: User }) {
-      const [spotify] = await prisma.account.findMany({
+      const spotify = await prisma.account.findUnique({
         where: { userId: user.id },
       })
       if (
+        spotify &&
         spotify.expires_at &&
         spotify.expires_at < Math.floor(Date.now() / 1000)
       ) {
-        console.log(
-          spotify.expires_at,
-          " is less than ",
-          Math.floor(Date.now() / 1000)
-        )
         // If the access token has expired, try to refresh it
         try {
           const response = await fetch(
@@ -57,8 +53,6 @@ export const authOptions = {
           const tokens: TokenSet = await response.json()
 
           if (!response.ok) throw tokens
-
-          console.log("Refreshed access token", tokens)
 
           await prisma.account.update({
             data: {

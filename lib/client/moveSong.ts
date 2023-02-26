@@ -9,8 +9,6 @@ export const moveSong = async ({
   start: number
   insert: number
 }) => {
-  console.log("start", start)
-  console.log("insert", insert)
   const res = await fetch(
     `/api/spotify/moveItem?playlist=${playlist}&start=${start}&insert=${
       insert > start ? insert + 1 : insert

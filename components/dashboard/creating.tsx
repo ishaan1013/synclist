@@ -1,124 +1,28 @@
-import { Button } from "@/components/ui/button"
-import { getPlaylists } from "@/lib/client/getPlaylists"
-import { useStore } from "@/lib/state"
-import { FolderPlus, Loader2 } from "lucide-react"
-import Image from "next/image"
-import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
-import { useToast } from "../ui/toast/useToast"
-import Creating from "./creating"
+import { Loader2 } from "lucide-react"
+import { Button } from "../ui/button"
 
-export const PlaylistSelect = () => {
-  const accessToken = useStore((state) => state.accessToken)
-  const userData = useStore((state) => state.userData)
-  const playlists = useStore((state) => state.playlists)
-  const setPlaylists = useStore((state) => state.setPlaylists)
-  const selected = useStore((state) => state.selected)
-  const setSelected = useStore((state) => state.setSelected)
-
-  useEffect(() => {
-    if (accessToken) {
-      getPlaylists({ accessToken }).then((res) => {
-        if (res.length === 0) setPlaylists({})
-        else setPlaylists(res.playlists)
-      })
-    }
-  }, [accessToken])
-
-  const router = useRouter()
-  const [selecting, setSelecting] = useState(true)
-
-  const [roomId, setRoomId] = useState<string | null>(null)
-
-  const createRoom = async (id: string, user?: string) => {
-    if (user) {
-      const res = await fetch(`/api/createRoom?playlist=${id}&user=${user}`, {
-        method: "POST",
-      })
-      const data = await res.json()
-      setRoomId(data.roomId)
-    }
-  }
-
-  const selectHandler = (id: string) => {
-    setSelected(id)
-    setSelecting(false)
-
-    createRoom(id, userData?.id)
-  }
-
-  useEffect(() => {
-    if (roomId) {
-      router.push(`/editor/${roomId}`)
-    }
-  }, [roomId])
-
-  const { toast } = useToast()
-
+const Creating = ({ name }: { name: string }) => {
   return (
-    <div className="flex h-full min-w-[650px] flex-grow flex-col  items-start justify-start overflow-y-auto p-12">
-      <div className="flex w-full items-center justify-between">
-        <div className="text-3xl font-medium">Select A Playlist</div>
-        <Button
-          onClick={() => {
-            toast({
-              title: "Coming soon!",
-              description: "Feel free to contribute on GitHub 😁",
-            })
-          }}
-          disabled={!selecting}
-          className="text-base">
-          <FolderPlus className="mr-2 h-4 w-4" />
-          Create New
-        </Button>
+    <div>
+      <Loader2 className="mt-4 h-8 w-8 animate-spin animate-pulse self-center text-zinc-500" />
+
+      <div className="mt-4 mb-8 text-sm">
+        Creating a live editing room for{" "}
+        <span className="font-bold underline underline-offset-2">{name}</span>
       </div>
-      {/* <div className="my-4 w-[900px] text-xs">{accessToken}</div> */}
-      <div className=" mt-8 flex w-full max-w-screen-lg flex-wrap gap-4">
-        {/* <div className="h-96 w-[900px] overflow-auto whitespace-pre text-xs">
-          {JSON.stringify(playlists, null, "\t")}
-        </div> */}
-        {selecting ? (
-          playlists ? (
-            playlists?.items?.map((playlist: any, i: number) => {
-              if (userData?.id !== playlist.owner.id || !playlist.public)
-                return null
-              return (
-                <Button
-                  key={i}
-                  className="h-auto w-52 flex-col items-start justify-start rounded-lg p-3 text-base"
-                  variant="subtle"
-                  onClick={() => selectHandler(playlist.id)}>
-                  <div className="relative mb-4 aspect-square w-full overflow-hidden rounded-md">
-                    <Image
-                      src={playlist.images[0].url}
-                      alt="playlist image"
-                      fill
-                      sizes="250px"
-                      className="min-h-full min-w-full object-cover"
-                    />
-                  </div>
-                  <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-left">
-                    {playlist.name}
-                  </div>
-                  <div className="ellipsis mt-1 h-5 w-full overflow-hidden whitespace-nowrap text-left text-sm font-normal text-zinc-500">
-                    {playlist.description ?? ""}
-                  </div>
-                </Button>
-              )
-            })
-          ) : (
-            <div className="text-zinc-500">
-              No Playlists Found. Create one to get started!
-            </div>
-          )
-        ) : (
-          <Creating
-            name={
-              playlists?.items.find((item: any) => item.id === selected)?.name
-            }
-          />
-        )}
-      </div>
+      <Button size="sm" variant="subtle">
+        <a
+          href="https://liveblocks.io"
+          target="_blank"
+          rel="noreferrer"
+          tabIndex={-1}
+          className="flex">
+          <span className="mr-1.5">Built with</span>{" "}
+          <div className="translate-y-[1px] ">
+            <LiveblocksLogo />
+          </div>
+        </a>
+      </Button>
     </div>
   )
 }
@@ -147,3 +51,5 @@ const LiveblocksLogo = () => (
       fill="currentColor"></path>
   </svg>
 )
+
+export default Creating

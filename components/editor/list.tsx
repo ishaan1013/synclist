@@ -84,17 +84,11 @@ const List = ({
 
   return (
     <>
-      {/* <div className="whitespace-nowrap text-xs">
-        {JSON.stringify(items) ?? "none"}
-      </div> */}
-      {/* <div className="font-bold text-red-500">{activeId ?? "no active"}</div> */}
       <DndContext
         sensors={sensors}
         collisionDetection={closestCenter}
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}>
-        {/* {playlist} */}
-        {/* {accessToken} */}
         <div className="mt-8 flex w-full max-w-screen-xs flex-col space-y-2 2xl:max-w-screen-sm">
           {songs ? (
             <SortableContext

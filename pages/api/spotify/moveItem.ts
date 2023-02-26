@@ -8,14 +8,6 @@ export default async function handler(
 
   if (typeof start === "string" && typeof insert === "string") {
     try {
-      console.log(
-        `https://api.spotify.com/v1/playlists/${playlist}/tracks`,
-        JSON.stringify({
-          range_start: start,
-          insert_before: insert,
-        })
-      )
-
       const response = await fetch(
         `https://api.spotify.com/v1/playlists/${playlist}/tracks`,
         {

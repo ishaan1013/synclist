@@ -55,6 +55,9 @@ CREATE TABLE "Room" (
 );
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Account_userId_key" ON "Account"("userId");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Account_provider_providerAccountId_key" ON "Account"("provider", "providerAccountId");
 
 -- CreateIndex

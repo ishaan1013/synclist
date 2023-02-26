@@ -69,8 +69,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   })
 
-  console.log(user)
-
   return {
     props: {
       session,

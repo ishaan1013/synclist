@@ -22,5 +22,4 @@ export const addSong = async ({
       method: "POST",
     }
   )
-  console.log("added " + track.title)
 }

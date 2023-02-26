@@ -10,7 +10,7 @@ generator client {
 
 model Account {
   id                String  @id @default(cuid())
-  userId            String
+  userId            String  @unique
   type              String
   provider          String
   providerAccountId String
