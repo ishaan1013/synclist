@@ -16,7 +16,7 @@ import dynamic from "next/dynamic"
 
 const Landing = () => {
   const [open, setOpen] = useState(false)
-  const [playing, setPlaying] = useState(true)
+  const [playing, setPlaying] = useState(false)
   const ReactPlayer = dynamic(() => import("react-player"), { ssr: false })
 
   return (
