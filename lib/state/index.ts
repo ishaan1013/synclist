@@ -4,6 +4,14 @@ import { liveblocks } from "@liveblocks/zustand"
 import type { WithLiveblocks } from "@liveblocks/zustand"
 import songType from "../songType"
 
+export type UDataType = {
+  name?: string | null | undefined
+  email?: string | null | undefined
+  image?: string | null | undefined
+  userExt: string
+  id: string
+}
+
 type Cursor = { x: number; y: number }
 
 const client = createClient({
@@ -27,6 +35,10 @@ type T = {
   setMessageMode: (messageMode: boolean) => void
   expanded: boolean
   setExpanded: (expanded: boolean) => void
+  userData: UDataType | undefined
+  setUserData: (userData: UDataType | undefined) => void
+  accessToken: string
+  setAccessToken: (accessToken: string) => void
 }
 
 export const useStore = create<WithLiveblocks<T>>()(
@@ -48,12 +60,23 @@ export const useStore = create<WithLiveblocks<T>>()(
       setMessageMode: (messageMode) => set({ messageMode }),
       expanded: true,
       setExpanded: (expanded) => set({ expanded }),
+      userData: {
+        name: "",
+        email: "",
+        image: "",
+        userExt: "",
+        id: "",
+      },
+      setUserData: (userData: UDataType | undefined) => set({ userData }),
+      accessToken: "",
+      setAccessToken: (accessToken: string) => set({ accessToken }),
     }),
     {
       client,
       presenceMapping: {
         cursor: true,
         message: true,
+        userData: true,
       },
       storageMapping: {
         songs: true,
@@ -63,5 +86,4 @@ export const useStore = create<WithLiveblocks<T>>()(
   )
 )
 
-export * from "./account"
 export * from "./songSearch"

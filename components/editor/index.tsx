@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { useAccountStore, useStore } from "@/lib/state"
+import { useStore } from "@/lib/state"
 import { Command, Music } from "lucide-react"
 import { Dispatch, useCallback, useEffect, useRef, useState } from "react"
 import List from "./list"
@@ -14,10 +14,11 @@ const Editor = ({
   setEditorScroll: (editorScroll: number) => void
   setOpen: Dispatch<React.SetStateAction<boolean>>
 }) => {
-  const accessToken = useAccountStore((state) => state.accessToken)
+  const accessToken = useStore((state) => state.accessToken)
   const selected = useStore((state) => state.selected)
   // const setSelected = useStore((state) => state.setSelected)
-  const data = useAccountStore((state) => state.userData)
+  const data = useStore((state) => state.userData)
+  const others = useStore((state) => state.liveblocks.others)
 
   const songs = useStore((state) => state.songs)
   const setSongs = useStore((state) => state.setSongs)
@@ -100,8 +101,17 @@ const Editor = ({
           </Button>
         </div>
         <div className="flex items-center space-x-4">
-          <div className="translate-y-1">
+          <div className="flex items-center space-x-3">
             <Avatar name="Ishaan" src={data?.image} clr="zinc" />
+            {others.map((presence) => (
+              <Avatar
+                // @ts-ignore
+                name={presence?.presence?.userData?.name}
+                // @ts-ignore
+                src={presence?.presence?.userData?.image}
+                clr="zinc"
+              />
+            ))}
           </div>
           <LinkPopover />
         </div>

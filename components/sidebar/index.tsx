@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { useAccountStore, useStore } from "@/lib/state"
+import { useStore } from "@/lib/state"
 import { cn } from "@/lib/utils"
 import { Check, ChevronLeft, Copy, Loader2, LogOut } from "lucide-react"
 import { signOut } from "next-auth/react"
@@ -15,7 +15,7 @@ const Sidebar = ({
   editing: boolean
   selected?: any
 }) => {
-  const data = useAccountStore((state) => state.userData)
+  const data = useStore((state) => state.userData)
   const setSelected = useStore((state) => state.setSelected)
   const playlists = useStore((state) => state.playlists)
 
@@ -91,7 +91,7 @@ const Sidebar = ({
           disabled={Boolean(selected) && !editing}
           className={cn(
             !expandedUI && "max-w-[4rem]",
-            "relative m-0 h-16 w-full rounded-lg bg-transparent p-2 text-left hover:bg-zinc-800"
+            "relative m-0 h-16 w-full rounded-lg bg-transparent p-2 text-left hover:bg-zinc-800 focus:ring-zinc-700 focus:ring-offset-zinc-900"
           )}>
           <Link
             href="/dashboard"
@@ -185,7 +185,7 @@ const Sidebar = ({
         onClick={() => signOut()}
         className={cn(
           !expandedUI && "max-w-[4rem]",
-          "group relative m-0 flex h-16 w-full items-center justify-start rounded-lg bg-transparent p-2 text-left hover:bg-zinc-800"
+          "group relative m-0 flex h-16 w-full items-center justify-start rounded-lg bg-transparent p-2 text-left hover:bg-zinc-800 focus:ring-zinc-700 focus:ring-offset-zinc-900"
         )}>
         <div className="relative z-0 flex aspect-square h-12 items-center justify-center overflow-hidden rounded-md bg-zinc-600 bg-cover duration-100">
           <div className="absolute z-10 opacity-0 duration-200 group-hover:opacity-100">

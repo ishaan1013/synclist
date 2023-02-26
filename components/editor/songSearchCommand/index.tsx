@@ -5,7 +5,7 @@ import {
 } from "@/components/ui/command"
 import { Dispatch, useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
-import { useAccountStore, useSongSearchStore, useStore } from "@/lib/state"
+import { useSongSearchStore, useStore } from "@/lib/state"
 import Image from "next/image"
 import songType from "@/lib/songType"
 import { searchSongs, addSong } from "@/lib/client"
@@ -43,7 +43,7 @@ const SongSearchCommand = ({
 
   const [query, setQuery] = useState<string>("")
   const [songResults, setSongResults] = useState<any[]>([])
-  const accessToken = useAccountStore((state) => state.accessToken)
+  const accessToken = useStore((state) => state.accessToken)
   const songs = useStore((state) => state.songs)
   const setSongs = useStore((state) => state.setSongs)
   const selected = useStore((state) => state.selected)

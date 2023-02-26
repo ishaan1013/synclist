@@ -5,7 +5,7 @@ import { useEffect, useState } from "react"
 import Head from "next/head"
 import { useSession } from "next-auth/react"
 import { prisma } from "@/lib/prisma"
-import { UDataType, useAccountStore, useStore } from "@/lib/state"
+import { UDataType, useStore } from "@/lib/state"
 
 import Sidebar from "@/components/sidebar"
 import Editor from "@/components/editor"
@@ -32,8 +32,8 @@ const EditorScreen = ({
   const { data: session } = useSession()
   const data = session?.user
 
-  const setUserData = useAccountStore((state) => state.setUserData)
-  const setAccessToken = useAccountStore((state) => state.setAccessToken)
+  const setUserData = useStore((state) => state.setUserData)
+  const setAccessToken = useStore((state) => state.setAccessToken)
   const setSelected = useStore((state) => state.setSelected)
 
   useEffect(() => {

@@ -12,7 +12,7 @@ import { GripVertical, Mic2, MoreVertical, Music, Trash2 } from "lucide-react"
 import { circular } from "@/pages/_app"
 import songType from "@/lib/songType"
 import { deleteSong } from "@/lib/client/deleteSong"
-import { useAccountStore, useStore } from "@/lib/state"
+import { useStore } from "@/lib/state"
 
 const Song = forwardRef(
   (
@@ -24,7 +24,7 @@ const Song = forwardRef(
     }: { song: songType; id: string; attributes?: any; listeners?: any },
     ref: ForwardedRef<HTMLDivElement>
   ) => {
-    const accessToken = useAccountStore((state) => state.accessToken)
+    const accessToken = useStore((state) => state.accessToken)
     const selected = useStore((state) => state.selected)
     const songs = useStore((state) => state.songs)
     const setSongs = useStore((state) => state.setSongs)

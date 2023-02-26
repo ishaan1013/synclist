@@ -8,7 +8,7 @@ import { prisma } from "@/lib/prisma"
 import Sidebar from "@/components/sidebar"
 import { PlaylistSelect } from "@/components/dashboard"
 import { useEffect } from "react"
-import { UDataType, useAccountStore } from "@/lib/state"
+import { UDataType, useStore } from "@/lib/state"
 
 const Dashboard = ({
   user,
@@ -16,8 +16,8 @@ const Dashboard = ({
   const { data: session } = useSession()
   const data = session?.user
 
-  const setUserData = useAccountStore((state) => state.setUserData)
-  const setAccessToken = useAccountStore((state) => state.setAccessToken)
+  const setUserData = useStore((state) => state.setUserData)
+  const setAccessToken = useStore((state) => state.setAccessToken)
 
   useEffect(() => {
     setAccessToken(user.accounts?.[0].access_token)

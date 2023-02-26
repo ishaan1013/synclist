@@ -1,13 +1,13 @@
 import { Button } from "@/components/ui/button"
-import { useAccountStore, useStore } from "@/lib/state"
+import { useStore } from "@/lib/state"
 import { FolderPlus, Loader2 } from "lucide-react"
 import Image from "next/image"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 
 export const PlaylistSelect = () => {
-  const accessToken = useAccountStore((state) => state.accessToken)
-  const userData = useAccountStore((state) => state.userData)
+  const accessToken = useStore((state) => state.accessToken)
+  const userData = useStore((state) => state.userData)
   const playlists = useStore((state) => state.playlists)
   const setPlaylists = useStore((state) => state.setPlaylists)
   const selected = useStore((state) => state.selected)
