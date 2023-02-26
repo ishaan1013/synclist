@@ -27,19 +27,23 @@ export const PlaylistSelect = () => {
 
   const [roomId, setRoomId] = useState<string | null>(null)
 
-  const createRoom = async (id: string) => {
-    const res = await fetch(`/api/createRoom?playlist=${id}`, {
-      method: "POST",
-    })
-    const data = await res.json()
-    setRoomId(data.roomId)
+  const createRoom = async (id: string, user?: string) => {
+    if (user) {
+      console.log("user: ", user, "playlist: ", id)
+      const res = await fetch(`/api/createRoom?playlist=${id}&user=${user}`, {
+        method: "POST",
+      })
+      const data = await res.json()
+      console.log(data)
+      setRoomId(data.roomId)
+    }
   }
 
   const selectHandler = (id: string) => {
     setSelected(id)
     setSelecting(false)
 
-    createRoom(id)
+    createRoom(id, userData?.id)
   }
 
   useEffect(() => {

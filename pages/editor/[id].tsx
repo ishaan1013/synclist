@@ -23,6 +23,7 @@ const EditorScreen = ({
   user,
   playlist,
   expiry,
+  owner,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const { data: session } = useSession()
   const data = session?.user
@@ -42,7 +43,10 @@ const EditorScreen = ({
       image: data?.image,
     }
     setUserData(userData)
-    setAccessToken(user.accounts?.[0].access_token)
+
+    if (owner === user.accounts?.[0].providerAccountId) {
+      setAccessToken(user.accounts?.[0].access_token)
+    }
     setSelected(playlist)
   }, [])
 
@@ -215,7 +219,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     room
   )
   const playlist = room ? room.playlist : ""
-  const expiry = room ? room.createdAt.getTime() + 86400000 : undefined
+  const owner = room ? room.owner : ""
+  const expiry = room ? room.createdAt.getTime() + 3600000 : undefined
 
   return {
     props: {
@@ -223,6 +228,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       user,
       playlist,
       expiry,
+      owner,
     },
   }
 }

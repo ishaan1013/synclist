@@ -11,10 +11,14 @@ export default async function handler(
     return
   }
 
-  const { playlist } = req.query
+  const { playlist, user } = req.query
 
   if (typeof playlist !== "string") {
     res.status(400).send({ message: "Playlist must be a string" })
+    return
+  }
+  if (typeof user !== "string") {
+    res.status(400).send({ message: "User must be a string" })
     return
   }
 
@@ -25,6 +29,7 @@ export default async function handler(
       data: {
         id: roomId,
         playlist,
+        owner: user,
       },
     })
 

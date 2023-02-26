@@ -55,7 +55,7 @@ model VerificationToken {
 
 model Room {
   id        String   @id
-  open      Boolean  @default(true)
   playlist  String
+  owner     String
   createdAt DateTime @default(now())
 }

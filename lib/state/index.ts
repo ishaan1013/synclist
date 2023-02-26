@@ -3,6 +3,7 @@ import { create } from "zustand"
 import { liveblocks } from "@liveblocks/zustand"
 import type { WithLiveblocks } from "@liveblocks/zustand"
 import songType from "../songType"
+import { transformDocument } from "@prisma/client/runtime"
 
 export type UDataType = {
   name?: string | null | undefined
@@ -81,6 +82,7 @@ export const useStore = create<WithLiveblocks<T>>()(
       storageMapping: {
         songs: true,
         selected: true,
+        accessToken: true,
       },
     }
   )
