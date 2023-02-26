@@ -2,6 +2,7 @@ import "../styles/globals.css"
 import type { AppProps } from "next/app"
 import localFont from "@next/font/local"
 import { SessionProvider } from "next-auth/react"
+import { Toaster } from "@/components/ui/toast"
 
 export const circular = localFont({
   variable: "--circular-font",
@@ -67,6 +68,7 @@ export default function App({
     <SessionProvider session={session}>
       <div className={circular.className}>
         <Component {...pageProps} />
+        <Toaster />
       </div>
     </SessionProvider>
   )

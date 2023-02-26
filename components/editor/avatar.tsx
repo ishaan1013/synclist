@@ -55,9 +55,7 @@ const Avatar = ({
           </div>
           {/* {parseInt(clr) % COLORS.length} */}
         </TooltipTrigger>
-        <TooltipContent side="bottom">
-          <p className="select-none">{name}</p>
-        </TooltipContent>
+        <TooltipContent side="bottom">{name}</TooltipContent>
       </Tooltip>
     </TooltipProvider>
   )

@@ -81,7 +81,7 @@ const Sidebar = ({
         onClick={() => setExpanded(!expanded)}
         className={cn(
           expanded ? "rotate-0" : "rotate-180",
-          "absolute right-0 top-1/2 h-6 w-6 translate-x-1/2 -translate-y-1/2 rounded-full border border-zinc-200 p-1 text-xs shadow-[0_0px_20px_2px] shadow-zinc-900/50 duration-100"
+          "absolute right-0 top-1/2 h-6 w-6 translate-x-1/2 -translate-y-1/2 rounded-full border border-zinc-200 p-1 text-xs shadow-[0_0px_20px_0px] shadow-zinc-900/30 duration-100"
         )}>
         <ChevronLeft className="" />
       </Button>

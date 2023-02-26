@@ -102,7 +102,7 @@ const Editor = ({
           </Button>
         </div>
         <div className="flex items-center space-x-4">
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center">
             <Avatar name="Ishaan" src={data?.image} clr="zinc" />
             {others.map(({ connectionId, presence }) => (
               <Avatar

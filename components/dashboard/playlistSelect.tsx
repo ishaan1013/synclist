@@ -5,6 +5,7 @@ import { FolderPlus, Loader2 } from "lucide-react"
 import Image from "next/image"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
+import { useToast } from "../ui/toast/useToast"
 
 export const PlaylistSelect = () => {
   const accessToken = useStore((state) => state.accessToken)
@@ -52,11 +53,21 @@ export const PlaylistSelect = () => {
     }
   }, [roomId])
 
+  const { toast } = useToast()
+
   return (
     <div className="flex h-full min-w-[650px] flex-grow flex-col  items-start justify-start overflow-y-auto p-12">
       <div className="flex w-full items-center justify-between">
         <div className="text-3xl font-medium">Select A Playlist</div>
-        <Button disabled={!selecting} className="text-base">
+        <Button
+          onClick={() => {
+            toast({
+              title: "Coming soon!",
+              description: "Feel free to contribute on GitHub 😁",
+            })
+          }}
+          disabled={!selecting}
+          className="text-base">
           <FolderPlus className="mr-2 h-4 w-4" />
           Create New
         </Button>
