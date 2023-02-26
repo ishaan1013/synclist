@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useState } from "react"
 import { Button } from "../ui/button"
-import { ArrowRight, Github, Twitter } from "lucide-react"
+import { ArrowRight, Github, Play, Square, Twitter } from "lucide-react"
 import { signIn } from "next-auth/react"
 
 import {
@@ -10,12 +10,14 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog"
 import { cn } from "@/lib/utils"
+import dynamic from "next/dynamic"
 
 const Landing = () => {
   const [open, setOpen] = useState(false)
+  const [playing, setPlaying] = useState(true)
+  const ReactPlayer = dynamic(() => import("react-player"), { ssr: false })
 
   return (
     <>
@@ -49,7 +51,25 @@ const Landing = () => {
             <Github className="h-4 w-4" />
           </Button>
         </div>
-        <div className="mt-12 aspect-square w-full max-w-screen-lg rounded-2xl bg-zinc-900 xs:aspect-video"></div>
+        <div className="relative mt-12 aspect-square w-full max-w-screen-lg overflow-hidden rounded-2xl bg-zinc-900 shadow-xl xs:aspect-video">
+          <Button
+            onClick={() => setPlaying((prev) => !prev)}
+            variant="subtle"
+            className="jusitfy-center absolute top-2 right-2 z-10 flex h-8 w-8 items-center rounded-full p-0 mix-blend-difference">
+            {playing ? (
+              <Square className="h-4 w-4" />
+            ) : (
+              <Play className="h-4 w-4 pl-0.5" />
+            )}
+          </Button>
+          <ReactPlayer
+            className="min-h-full min-w-full object-cover"
+            url="SyncList-Video.mp4"
+            controls={false}
+            loop
+            playing={playing}
+          />
+        </div>
       </div>
     </>
   )
@@ -68,7 +88,9 @@ const LoginDialog = ({
         <DialogHeader>
           <DialogTitle>Want to try SyncList?</DialogTitle>
           <DialogDescription>
-            Spotify doesn&apos;t allow public OAuth access, so the developer needs to manually give users access. DM me on Twitter/Linkedin so I can give you access 😁
+            Spotify doesn&apos;t allow public OAuth access, so the developer
+            needs to manually give users access. DM me on Twitter/Linkedin so I
+            can give you access 😁
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="grid w-full grid-cols-2 gap-x-2">
