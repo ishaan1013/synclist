@@ -54,7 +54,12 @@ const List = ({
         )
 
         if (newIndex !== -1) {
-          moveSong({ accessToken, start: oldIndex, insert: newIndex, playlist })
+          moveSong({
+            accessToken,
+            start: oldIndex,
+            insert: newIndex,
+            playlist,
+          })
           return arrayMove(songs, oldIndex, newIndex)
         } else {
           return songs
