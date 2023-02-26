@@ -68,15 +68,15 @@ const Editor = ({
       onScroll={onScroll}
       className="dashboard-scroll flex h-full min-w-[700px] flex-grow flex-col items-start justify-start overflow-y-auto p-12">
       <div className="flex w-full items-center justify-between">
-        <div className="flex items-center space-x-3 lg:space-x-6">
-          <div className="text-2xl font-medium lg:text-3xl">
+        <div className="flex items-center">
+          <div className="mr-3 text-2xl font-medium lg:mr-6 lg:text-3xl">
             Playlist Editor
           </div>
           <Button
             onClick={() => {
               setOpen(true)
             }}
-            className="text-base">
+            className="mr-2 text-base lg:mr-4">
             Add Song
             <div className="ml-1.5 flex items-center rounded-md border border-b-[3px] border-zinc-600 py-0.5 px-1 text-zinc-500">
               <Command className="h-3 w-3" />

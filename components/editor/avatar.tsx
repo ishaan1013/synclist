@@ -13,6 +13,7 @@ const Avatar = ({
 }: {
   clr:
     | "zinc"
+    | "#2447e3"
     | "#22c55e"
     | "#ef4444"
     | "#eab308"
@@ -24,6 +25,8 @@ const Avatar = ({
 }) => {
   const avatarCn = {
     zinc: "relative h-10 w-10 overflow-hidden rounded-full bg-zinc-600  outline-none ring-2 ring-offset-2 ring-zinc-500",
+    "#2447e3":
+      "relative h-10 w-10 overflow-hidden rounded-full bg-zinc-600 outline-none ring-2 ring-offset-2 ring[#2447e3]",
     "#22c55e":
       "relative h-10 w-10 overflow-hidden rounded-full bg-zinc-600 outline-none ring-2 ring-offset-2 ring[#22c55e]",
     "#ef4444":
