@@ -69,6 +69,14 @@ const SongSearchCommand = ({
     })
   }
 
+  const setMessageMode = useStore((state) => state.setMessageMode)
+
+  useEffect(() => {
+    if (open) {
+      setMessageMode(false)
+    }
+  }, [open])
+
   return (
     <>
       <CommandDialog open={open} onOpenChange={setOpen}>

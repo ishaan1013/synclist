@@ -1,3 +1,4 @@
+import { useStore } from "@/lib/state"
 import { cn } from "@/lib/utils"
 import { useEffect } from "react"
 
@@ -46,6 +47,8 @@ const Cursor = ({
     }
   }, [])
 
+  const expanded = useStore((state) => state.expanded)
+
   return (
     <div
       className="pointer-events-none absolute top-0 left-0 z-[1000]"
@@ -78,7 +81,10 @@ const Cursor = ({
           <div
             className="absolute top-5 left-2 rounded-lg p-1"
             onKeyUp={(e) => e.stopPropagation()}
-            style={{ backgroundColor: color }}>
+            style={{
+              backgroundColor: color,
+              transform: `translateX(${-(expanded ? 0 : 152)}px)`,
+            }}>
             {self ? (
               <input
                 value={message}

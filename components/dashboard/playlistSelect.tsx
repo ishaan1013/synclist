@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { getPlaylists } from "@/lib/client/getPlaylists"
 import { useStore } from "@/lib/state"
-import { FolderPlus, Loader2 } from "lucide-react"
+import { FolderPlus, Loader2, Music } from "lucide-react"
 import Image from "next/image"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
@@ -88,14 +88,20 @@ export const PlaylistSelect = () => {
                   className="h-auto w-52 flex-col items-start justify-start rounded-lg p-3 text-base"
                   variant="subtle"
                   onClick={() => selectHandler(playlist.id)}>
-                  <div className="relative mb-4 aspect-square w-full overflow-hidden rounded-md">
-                    <Image
-                      src={playlist.images[0].url}
-                      alt="playlist image"
-                      fill
-                      sizes="250px"
-                      className="min-h-full min-w-full object-cover"
-                    />
+                  <div className="relative mb-4 aspect-square w-full overflow-hidden rounded-md bg-zinc-800">
+                    {playlist.images[0]?.url ? (
+                      <Image
+                        src={playlist.images[0].url}
+                        alt="playlist image"
+                        fill
+                        sizes="250px"
+                        className="z-10 min-h-full min-w-full object-cover"
+                      />
+                    ) : (
+                      <div className="z-0 flex h-full w-full items-center justify-center">
+                        <Music className="h-12 w-12 text-white" />
+                      </div>
+                    )}
                   </div>
                   <div className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-left">
                     {playlist.name}
